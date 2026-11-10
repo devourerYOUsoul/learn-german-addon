@@ -1,0 +1,23 @@
+{
+  "deutschimspiel.prompt.title": "Write it in German",
+  "deutschimspiel.prompt.eat.present": "I eat: %s",
+  "deutschimspiel.prompt.eat.perfect": "I ate: %s",
+  "deutschimspiel.prompt.drink.present": "I drink: %s",
+  "deutschimspiel.prompt.drink.perfect": "I drank: %s",
+  "deutschimspiel.prompt.craft.present": "I craft: %s",
+  "deutschimspiel.prompt.craft.perfect": "I crafted: %s",
+  "deutschimspiel.prompt.smelt_food.present": "I cook: %s",
+  "deutschimspiel.prompt.smelt_food.perfect": "I cooked: %s",
+  "deutschimspiel.prompt.smelt_other.present": "I smelt: %s",
+  "deutschimspiel.prompt.smelt_other.perfect": "I smelted: %s",
+  "deutschimspiel.button.check": "Check",
+  "deutschimspiel.button.hint": "Hint",
+  "deutschimspiel.button.answer": "Show answer",
+  "deutschimspiel.button.close": "Close",
+  "deutschimspiel.feedback.correct": "Richtig!",
+  "deutschimspiel.feedback.almost": "Almost! Better with the article: %s",
+  "deutschimspiel.feedback.wrong": "Not quite. Try again.",
+  "deutschimspiel.feedback.answer": "Answer: %s",
+  "deutschimspiel.hint.noun": "Word: %s",
+  "deutschimspiel.hint.pattern": "Pattern: %s"
+}

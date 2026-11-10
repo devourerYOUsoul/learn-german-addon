@@ -1,0 +1,940 @@
+{
+ "words": {
+  "apple": [
+   "Apfel",
+   "m"
+  ],
+  "golden_apple": [
+   "Goldapfel",
+   "m"
+  ],
+  "enchanted_golden_apple": [
+   "Zauber-Goldapfel",
+   "m"
+  ],
+  "bread": [
+   "Brot",
+   "n"
+  ],
+  "cookie": [
+   "Keks",
+   "m"
+  ],
+  "cake": [
+   "Kuchen",
+   "m"
+  ],
+  "pumpkin_pie": [
+   "Kürbiskuchen",
+   "m"
+  ],
+  "melon_slice": [
+   "Melonenscheibe",
+   "f"
+  ],
+  "melon": [
+   "Melone",
+   "f"
+  ],
+  "sweet_berries": [
+   "Süßbeeren",
+   "p"
+  ],
+  "glow_berries": [
+   "Leuchtbeeren",
+   "p"
+  ],
+  "carrot": [
+   "Karotte",
+   "f"
+  ],
+  "golden_carrot": [
+   "Goldkarotte",
+   "f"
+  ],
+  "potato": [
+   "Kartoffel",
+   "f"
+  ],
+  "baked_potato": [
+   "Ofenkartoffel",
+   "f"
+  ],
+  "poisonous_potato": [
+   "Giftkartoffel",
+   "f"
+  ],
+  "beetroot": [
+   "Rote Bete",
+   "f"
+  ],
+  "beetroot_soup": [
+   "Rote-Bete-Suppe",
+   "f"
+  ],
+  "mushroom_stew": [
+   "Pilzsuppe",
+   "f"
+  ],
+  "rabbit_stew": [
+   "Kaninchenragout",
+   "n"
+  ],
+  "suspicious_stew": [
+   "Eintopf",
+   "m"
+  ],
+  "beef": [
+   "Rindfleisch",
+   "n"
+  ],
+  "cooked_beef": [
+   "Steak",
+   "n"
+  ],
+  "porkchop": [
+   "Schweinekotelett",
+   "n"
+  ],
+  "cooked_porkchop": [
+   "Schweinebraten",
+   "m"
+  ],
+  "chicken": [
+   "Hähnchenfleisch",
+   "n"
+  ],
+  "cooked_chicken": [
+   "Brathähnchen",
+   "n"
+  ],
+  "mutton": [
+   "Hammelfleisch",
+   "n"
+  ],
+  "cooked_mutton": [
+   "Hammelbraten",
+   "m"
+  ],
+  "rabbit": [
+   "Kaninchenfleisch",
+   "n"
+  ],
+  "cooked_rabbit": [
+   "Kaninchenbraten",
+   "m"
+  ],
+  "cod": [
+   "Kabeljau",
+   "m"
+  ],
+  "cooked_cod": [
+   "Fischfilet",
+   "n"
+  ],
+  "salmon": [
+   "Lachs",
+   "m"
+  ],
+  "cooked_salmon": [
+   "Lachsfilet",
+   "n"
+  ],
+  "tropical_fish": [
+   "Tropenfisch",
+   "m"
+  ],
+  "pufferfish": [
+   "Kugelfisch",
+   "m"
+  ],
+  "rotten_flesh": [
+   "Gammelfleisch",
+   "n"
+  ],
+  "spider_eye": [
+   "Spinnenauge",
+   "n"
+  ],
+  "dried_kelp": [
+   "Trockentang",
+   "m"
+  ],
+  "kelp": [
+   "Seetang",
+   "m"
+  ],
+  "honey_bottle": [
+   "Honigflasche",
+   "f"
+  ],
+  "milk_bucket": [
+   "Milcheimer",
+   "m",
+   "Milch",
+   "f"
+  ],
+  "egg": [
+   "Ei",
+   "n"
+  ],
+  "sugar": [
+   "Zucker",
+   "m"
+  ],
+  "wheat": [
+   "Weizen",
+   "m"
+  ],
+  "wheat_seeds": [
+   "Weizensamen",
+   "p"
+  ],
+  "beetroot_seeds": [
+   "Rote-Bete-Samen",
+   "p"
+  ],
+  "pumpkin": [
+   "Kürbis",
+   "m"
+  ],
+  "carved_pumpkin": [
+   "Kürbislaterne",
+   "f"
+  ],
+  "cocoa_beans": [
+   "Kakaobohnen",
+   "p"
+  ],
+  "sugar_cane": [
+   "Zuckerrohr",
+   "n"
+  ],
+  "cactus": [
+   "Kaktus",
+   "m"
+  ],
+  "brown_mushroom": [
+   "Champignon",
+   "m"
+  ],
+  "red_mushroom": [
+   "Fliegenpilz",
+   "m"
+  ],
+  "potion": [
+   "Trank",
+   "m"
+  ],
+  "honeycomb": [
+   "Honigwabe",
+   "f"
+  ],
+  "chorus_fruit": [
+   "Chorusfrucht",
+   "f"
+  ],
+  "bowl": [
+   "Schüssel",
+   "f"
+  ],
+  "stick": [
+   "Stock",
+   "m"
+  ],
+  "coal": [
+   "Kohle",
+   "f"
+  ],
+  "charcoal": [
+   "Holzkohle",
+   "f"
+  ],
+  "iron_ingot": [
+   "Eisenbarren",
+   "m"
+  ],
+  "gold_ingot": [
+   "Goldbarren",
+   "m"
+  ],
+  "copper_ingot": [
+   "Kupferbarren",
+   "m"
+  ],
+  "netherite_ingot": [
+   "Netherit-Barren",
+   "m"
+  ],
+  "diamond": [
+   "Diamant",
+   "m"
+  ],
+  "emerald": [
+   "Smaragd",
+   "m"
+  ],
+  "lapis_lazuli": [
+   "Lapislazuli",
+   "m"
+  ],
+  "redstone": [
+   "Redstone-Staub",
+   "m"
+  ],
+  "quartz": [
+   "Quarz",
+   "m"
+  ],
+  "amethyst_shard": [
+   "Amethystsplitter",
+   "m"
+  ],
+  "raw_iron": [
+   "Roheisen",
+   "n"
+  ],
+  "raw_gold": [
+   "Rohgold",
+   "n"
+  ],
+  "raw_copper": [
+   "Rohkupfer",
+   "n"
+  ],
+  "clay_ball": [
+   "Tonklumpen",
+   "m"
+  ],
+  "brick": [
+   "Ziegel",
+   "m"
+  ],
+  "nether_brick": [
+   "Netherziegel",
+   "m"
+  ],
+  "glowstone_dust": [
+   "Leuchtsteinstaub",
+   "m"
+  ],
+  "gunpowder": [
+   "Schießpulver",
+   "n"
+  ],
+  "string": [
+   "Faden",
+   "m"
+  ],
+  "feather": [
+   "Feder",
+   "f"
+  ],
+  "leather": [
+   "Leder",
+   "n"
+  ],
+  "bone": [
+   "Knochen",
+   "m"
+  ],
+  "bone_meal": [
+   "Knochenmehl",
+   "n"
+  ],
+  "paper": [
+   "Papier",
+   "n"
+  ],
+  "book": [
+   "Buch",
+   "n"
+  ],
+  "ink_sac": [
+   "Tintenbeutel",
+   "m"
+  ],
+  "slime_ball": [
+   "Schleimball",
+   "m"
+  ],
+  "ender_pearl": [
+   "Enderperle",
+   "f"
+  ],
+  "blaze_rod": [
+   "Lohenrute",
+   "f"
+  ],
+  "blaze_powder": [
+   "Lohenstaub",
+   "m"
+  ],
+  "ghast_tear": [
+   "Ghast-Träne",
+   "f"
+  ],
+  "nether_star": [
+   "Nether-Stern",
+   "m"
+  ],
+  "prismarine_shard": [
+   "Prismarinscherbe",
+   "f"
+  ],
+  "flint": [
+   "Feuerstein",
+   "m"
+  ],
+  "flint_and_steel": [
+   "Feuerzeug",
+   "n"
+  ],
+  "bucket": [
+   "Eimer",
+   "m"
+  ],
+  "water_bucket": [
+   "Wassereimer",
+   "m"
+  ],
+  "lava_bucket": [
+   "Lavaeimer",
+   "m"
+  ],
+  "shears": [
+   "Schere",
+   "f"
+  ],
+  "fishing_rod": [
+   "Angel",
+   "f"
+  ],
+  "compass": [
+   "Kompass",
+   "m"
+  ],
+  "clock": [
+   "Uhr",
+   "f"
+  ],
+  "map": [
+   "Karte",
+   "f"
+  ],
+  "saddle": [
+   "Sattel",
+   "m"
+  ],
+  "lead": [
+   "Leine",
+   "f"
+  ],
+  "name_tag": [
+   "Namensschild",
+   "n"
+  ],
+  "torch": [
+   "Fackel",
+   "f"
+  ],
+  "lantern": [
+   "Laterne",
+   "f"
+  ],
+  "campfire": [
+   "Lagerfeuer",
+   "n"
+  ],
+  "bow": [
+   "Bogen",
+   "m"
+  ],
+  "crossbow": [
+   "Armbrust",
+   "f"
+  ],
+  "arrow": [
+   "Pfeil",
+   "m"
+  ],
+  "shield": [
+   "Schild",
+   "m"
+  ],
+  "trident": [
+   "Dreizack",
+   "m"
+  ],
+  "crafting_table": [
+   "Werkbank",
+   "f"
+  ],
+  "furnace": [
+   "Ofen",
+   "m"
+  ],
+  "blast_furnace": [
+   "Schmelzofen",
+   "m"
+  ],
+  "smoker": [
+   "Räucherofen",
+   "m"
+  ],
+  "chest": [
+   "Truhe",
+   "f"
+  ],
+  "barrel": [
+   "Fass",
+   "n"
+  ],
+  "anvil": [
+   "Amboss",
+   "m"
+  ],
+  "enchanting_table": [
+   "Zaubertisch",
+   "m"
+  ],
+  "brewing_stand": [
+   "Braustand",
+   "m"
+  ],
+  "cauldron": [
+   "Kessel",
+   "m"
+  ],
+  "stone": [
+   "Stein",
+   "m"
+  ],
+  "cobblestone": [
+   "Bruchstein",
+   "m"
+  ],
+  "dirt": [
+   "Erde",
+   "f"
+  ],
+  "grass_block": [
+   "Grasblock",
+   "m"
+  ],
+  "sand": [
+   "Sand",
+   "m"
+  ],
+  "gravel": [
+   "Kies",
+   "m"
+  ],
+  "glass": [
+   "Glas",
+   "n"
+  ],
+  "obsidian": [
+   "Obsidian",
+   "m"
+  ],
+  "iron_block": [
+   "Eisenblock",
+   "m"
+  ],
+  "gold_block": [
+   "Goldblock",
+   "m"
+  ],
+  "diamond_block": [
+   "Diamantblock",
+   "m"
+  ],
+  "emerald_block": [
+   "Smaragdblock",
+   "m"
+  ],
+  "coal_block": [
+   "Kohleblock",
+   "m"
+  ],
+  "copper_block": [
+   "Kupferblock",
+   "m"
+  ],
+  "redstone_block": [
+   "Redstone-Block",
+   "m"
+  ],
+  "lapis_block": [
+   "Lapislazuliblock",
+   "m"
+  ],
+  "netherite_block": [
+   "Netherit-Block",
+   "m"
+  ],
+  "bookshelf": [
+   "Bücherregal",
+   "n"
+  ],
+  "jukebox": [
+   "Plattenspieler",
+   "m"
+  ],
+  "hay_block": [
+   "Strohballen",
+   "m"
+  ],
+  "tnt": [
+   "TNT",
+   "n"
+  ],
+  "piston": [
+   "Kolben",
+   "m"
+  ],
+  "hopper": [
+   "Trichter",
+   "m"
+  ],
+  "dispenser": [
+   "Werfer",
+   "m"
+  ],
+  "dropper": [
+   "Spender",
+   "m"
+  ],
+  "lever": [
+   "Hebel",
+   "m"
+  ],
+  "ladder": [
+   "Leiter",
+   "f"
+  ],
+  "bed": [
+   "Bett",
+   "n"
+  ],
+  "composter": [
+   "Komposter",
+   "m"
+  ],
+  "loom": [
+   "Webstuhl",
+   "m"
+  ],
+  "stonecutter": [
+   "Steinsäge",
+   "f"
+  ],
+  "grindstone": [
+   "Schleifstein",
+   "m"
+  ],
+  "smithing_table": [
+   "Schmiedetisch",
+   "m"
+  ],
+  "cartography_table": [
+   "Kartentisch",
+   "m"
+  ],
+  "fletching_table": [
+   "Bognertisch",
+   "m"
+  ],
+  "tomato": [
+   "Tomate",
+   "f"
+  ],
+  "onion": [
+   "Zwiebel",
+   "f"
+  ],
+  "cabbage": [
+   "Kohl",
+   "m"
+  ],
+  "rice": [
+   "Reis",
+   "m"
+  ],
+  "wheat_dough": [
+   "Teig",
+   "m"
+  ],
+  "bacon": [
+   "Speck",
+   "m"
+  ],
+  "ham": [
+   "Schinken",
+   "m"
+  ],
+  "fried_egg": [
+   "Spiegelei",
+   "n"
+  ],
+  "bone_broth": [
+   "Knochenbrühe",
+   "f"
+  ],
+  "beef_stew": [
+   "Rindereintopf",
+   "m"
+  ],
+  "chicken_soup": [
+   "Hühnersuppe",
+   "f"
+  ],
+  "vegetable_soup": [
+   "Gemüsesuppe",
+   "f"
+  ],
+  "fish_stew": [
+   "Fischeintopf",
+   "m"
+  ],
+  "noodle_soup": [
+   "Nudelsuppe",
+   "f"
+  ],
+  "hamburger": [
+   "Hamburger",
+   "m"
+  ],
+  "apple_pie": [
+   "Apfelkuchen",
+   "m"
+  ],
+  "fruit_salad": [
+   "Obstsalat",
+   "m"
+  ],
+  "mixed_salad": [
+   "Salat",
+   "m"
+  ],
+  "dumplings": [
+   "Knödel",
+   "p"
+  ],
+  "roast_chicken": [
+   "Brathähnchen",
+   "n"
+  ],
+  "ratatouille": [
+   "Ratatouille",
+   "n"
+  ],
+  "pumpkin_slice": [
+   "Kürbisscheibe",
+   "f"
+  ],
+  "cabbage_leaf": [
+   "Kohlblatt",
+   "n"
+  ],
+  "tomato_sauce": [
+   "Tomatensoße",
+   "f"
+  ],
+  "pie_crust": [
+   "Teigboden",
+   "m"
+  ]
+ },
+ "suffixes": {
+  "_planks": [
+   "Holzbretter",
+   "p"
+  ],
+  "_log": [
+   "Baumstamm",
+   "m"
+  ],
+  "_stripped_log": [
+   "Baumstamm",
+   "m"
+  ],
+  "_sapling": [
+   "Setzling",
+   "m"
+  ],
+  "_leaves": [
+   "Blätter",
+   "p"
+  ],
+  "_sword": [
+   "Schwert",
+   "n"
+  ],
+  "_pickaxe": [
+   "Spitzhacke",
+   "f"
+  ],
+  "_axe": [
+   "Axt",
+   "f"
+  ],
+  "_shovel": [
+   "Schaufel",
+   "f"
+  ],
+  "_hoe": [
+   "Hacke",
+   "f"
+  ],
+  "_helmet": [
+   "Helm",
+   "m"
+  ],
+  "_chestplate": [
+   "Brustpanzer",
+   "m"
+  ],
+  "_leggings": [
+   "Hose",
+   "f"
+  ],
+  "_boots": [
+   "Stiefel",
+   "p"
+  ],
+  "_ore": [
+   "Erz",
+   "n"
+  ],
+  "_seeds": [
+   "Samen",
+   "p"
+  ],
+  "_stew": [
+   "Eintopf",
+   "m"
+  ],
+  "_soup": [
+   "Suppe",
+   "f"
+  ],
+  "_salad": [
+   "Salat",
+   "m"
+  ],
+  "_pie": [
+   "Kuchen",
+   "m"
+  ],
+  "_cookie": [
+   "Keks",
+   "m"
+  ],
+  "_bed": [
+   "Bett",
+   "n"
+  ],
+  "_door": [
+   "Tür",
+   "f"
+  ],
+  "_trapdoor": [
+   "Falltür",
+   "f"
+  ],
+  "_fence": [
+   "Zaun",
+   "m"
+  ],
+  "_fence_gate": [
+   "Zauntor",
+   "n"
+  ],
+  "_stairs": [
+   "Treppe",
+   "f"
+  ],
+  "_slab": [
+   "Platte",
+   "f"
+  ],
+  "_wall": [
+   "Mauer",
+   "f"
+  ],
+  "_sign": [
+   "Schild",
+   "n"
+  ],
+  "_boat": [
+   "Boot",
+   "n"
+  ],
+  "_button": [
+   "Knopf",
+   "m"
+  ],
+  "_pressure_plate": [
+   "Druckplatte",
+   "f"
+  ],
+  "_wool": [
+   "Wolle",
+   "f"
+  ],
+  "_carpet": [
+   "Teppich",
+   "m"
+  ],
+  "_banner": [
+   "Banner",
+   "n"
+  ],
+  "_dye": [
+   "Farbstoff",
+   "m"
+  ],
+  "_concrete": [
+   "Beton",
+   "m"
+  ],
+  "_terracotta": [
+   "Terrakotta",
+   "f"
+  ],
+  "_stained_glass": [
+   "Buntglas",
+   "n"
+  ],
+  "_stained_glass_pane": [
+   "Buntglasscheibe",
+   "f"
+  ],
+  "_glass_pane": [
+   "Glasscheibe",
+   "f"
+  ],
+  "_spawn_egg": [
+   "Spawn-Ei",
+   "n"
+  ],
+  "_bucket": [
+   "Eimer",
+   "m"
+  ],
+  "_horse_armor": [
+   "Pferderüstung",
+   "f"
+  ],
+  "_rail": [
+   "Schiene",
+   "f"
+  ],
+  "_hanging_sign": [
+   "Hängeschild",
+   "n"
+  ]
+ }
+}

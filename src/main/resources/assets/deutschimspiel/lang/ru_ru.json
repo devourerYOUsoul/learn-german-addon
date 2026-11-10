@@ -1,0 +1,23 @@
+{
+  "deutschimspiel.prompt.title": "Напиши по-немецки",
+  "deutschimspiel.prompt.eat.present": "Я ем: %s",
+  "deutschimspiel.prompt.eat.perfect": "Я съел: %s",
+  "deutschimspiel.prompt.drink.present": "Я пью: %s",
+  "deutschimspiel.prompt.drink.perfect": "Я выпил: %s",
+  "deutschimspiel.prompt.craft.present": "Я создаю: %s",
+  "deutschimspiel.prompt.craft.perfect": "Я создал: %s",
+  "deutschimspiel.prompt.smelt_food.present": "Я готовлю: %s",
+  "deutschimspiel.prompt.smelt_food.perfect": "Я приготовил: %s",
+  "deutschimspiel.prompt.smelt_other.present": "Я переплавляю: %s",
+  "deutschimspiel.prompt.smelt_other.perfect": "Я переплавил: %s",
+  "deutschimspiel.button.check": "Проверить",
+  "deutschimspiel.button.hint": "Подсказка",
+  "deutschimspiel.button.answer": "Показать ответ",
+  "deutschimspiel.button.close": "Закрыть",
+  "deutschimspiel.feedback.correct": "Richtig!",
+  "deutschimspiel.feedback.almost": "Почти! Лучше с артиклем: %s",
+  "deutschimspiel.feedback.wrong": "Пока не так. Попробуй ещё раз.",
+  "deutschimspiel.feedback.answer": "Ответ: %s",
+  "deutschimspiel.hint.noun": "Слово: %s",
+  "deutschimspiel.hint.pattern": "Схема: %s"
+}
