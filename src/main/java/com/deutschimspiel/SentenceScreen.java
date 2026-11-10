@@ -91,13 +91,8 @@ public class SentenceScreen extends Screen {
     }
 
     private void markFailed() {
-        if (!failedOnce) {
-            failedOnce = true;
-            if (!recorded) {
-                recorded = true;
-                Progress.record(action, subject.key(), false);
-            }
-        }
+        failedOnce = true;
+        Progress.recordWrong(action, subject.key());
     }
 
     private void check() {
@@ -109,13 +104,10 @@ public class SentenceScreen extends Screen {
         boolean lenient = !ok && !almost && Sentences.lenient(word, n);
         if (ok || almost || lenient) {
             solved = true;
-            if (!recorded) {
-                recorded = true;
-                Progress.record(action, subject.key(), !failedOnce && hintLevel == 0 && ok);
-                if (ok && hintLevel == 0 && Rewards.available().size() > 0
-                        && Progress.countReward(Config.REWARD_EVERY.get())) {
-                    pendingReward = true;
-                }
+            Progress.recordSolved(action, subject.key(), !failedOnce && hintLevel == 0 && ok);
+            if (ok && hintLevel == 0 && !Rewards.available().isEmpty()
+                    && Progress.countReward(Config.REWARD_EVERY.get())) {
+                pendingReward = true;
             }
             if (ok) {
                 feedback = Component.translatable("deutschimspiel.feedback.correct");
@@ -151,7 +143,7 @@ public class SentenceScreen extends Screen {
     }
 
     private void showAnswer() {
-        markFailed();
+        if (!failedOnce) markFailed();
         hintLevel = 2;
         feedback = Component.translatable("deutschimspiel.feedback.answer", primary);
         feedbackColor = theme.warn();

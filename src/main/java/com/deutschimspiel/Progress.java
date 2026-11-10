@@ -68,20 +68,27 @@ public final class Progress {
         return hit;
     }
 
-    public static synchronized void record(Action a, String subjectKey, boolean success) {
-        Data d = get();
-        String k = key(a, subjectKey);
-        if (success) {
-            d.correct++;
-            d.streak.merge(k, 1, Integer::sum);
-        } else {
-            d.wrong++;
-            d.streak.put(k, 0);
-        }
+    private static void save(Data d) {
         try {
             Files.writeString(file(), GSON.toJson(d), StandardCharsets.UTF_8);
         } catch (Exception ignored) {
             // not critical
         }
+    }
+
+    /** A wrong submission (or a shown answer): one more mistake, streak back to 0. */
+    public static synchronized void recordWrong(Action a, String subjectKey) {
+        Data d = get();
+        d.wrong++;
+        d.streak.put(key(a, subjectKey), 0);
+        save(d);
+    }
+
+    /** The prompt was solved. A clean solve (no mistake, no hint) also extends the streak. */
+    public static synchronized void recordSolved(Action a, String subjectKey, boolean clean) {
+        Data d = get();
+        d.correct++;
+        if (clean) d.streak.merge(key(a, subjectKey), 1, Integer::sum);
+        save(d);
     }
 }
