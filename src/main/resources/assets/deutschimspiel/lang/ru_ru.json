@@ -127,5 +127,15 @@
   "deutschimspiel.reward.got": "Получено: %s",
   "deutschimspiel.reward.soon": "Награда за 10 ответов! Нажми Enter или «Закрыть» — крутим колесо.",
   "deutschimspiel.broadcast.reward": "%s получает награду: %s",
-  "deutschimspiel.feedback.accepted": "Принято! Образец: %s"
+  "deutschimspiel.feedback.accepted": "Принято! Образец: %s",
+  "deutschimspiel.ex.mode.type": "Впиши предложение",
+  "deutschimspiel.ex.mode.tiles": "Собери из слов",
+  "deutschimspiel.ex.mode.gap": "Вставь пропущенные слова",
+  "deutschimspiel.ex.mode.gaptype": "Впиши пропущенное слово",
+  "deutschimspiel.ex.mode.fix": "Найди ошибку, впиши верно",
+  "deutschimspiel.ex.mode.pick": "Выбери верное предложение",
+  "deutschimspiel.ex.fill_all": "Заполни все пропуски",
+  "deutschimspiel.ex.next": "Далее",
+  "deutschimspiel.ex.done": "Готово",
+  "deutschimspiel.ex.hint_start": "Начало: %s"
 }

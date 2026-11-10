@@ -41,6 +41,6 @@ public final class PromptManager {
         long now = System.currentTimeMillis();
         lastPromptTime = now;
         LAST_BY_ACTION.put(p.action(), now);
-        mc.setScreen(new SentenceScreen(p.action(), p.subject()));
+        mc.setScreen(Exercises.open(p.action(), p.subject()));
     }
 }

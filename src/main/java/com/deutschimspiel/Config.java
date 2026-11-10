@@ -5,6 +5,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class Config {
     public enum Tense { PRESENT, PERFECT }
     public enum ThemeId { PERGAMENT, MAGIE, MODERN }
+    public enum Level { A1, A2, B1, MIX, AUTO }
 
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue SHOW_TOOLTIPS;
@@ -23,6 +24,14 @@ public final class Config {
     public static final ModConfigSpec.IntValue COOLDOWN_SECONDS;
     public static final ModConfigSpec.IntValue CHANCE_PERCENT;
     public static final ModConfigSpec.IntValue MASTERED_AFTER;
+    public static final ModConfigSpec.EnumValue<Level> LEVEL;
+    public static final ModConfigSpec.IntValue CHAIN_PERCENT;
+    public static final ModConfigSpec.IntValue W_TYPE;
+    public static final ModConfigSpec.IntValue W_TILES;
+    public static final ModConfigSpec.IntValue W_GAP;
+    public static final ModConfigSpec.IntValue W_GAPTYPE;
+    public static final ModConfigSpec.IntValue W_FIX;
+    public static final ModConfigSpec.IntValue W_PICK;
 
     public static final ModConfigSpec.BooleanValue PUNISH_ENABLED;
     public static final ModConfigSpec.IntValue WHEEL_AFTER;
@@ -73,6 +82,20 @@ public final class Config {
                 .defineInRange("chancePercent", 100, 0, 100);
         MASTERED_AFTER = b.comment("After this many clean answers in a row for the same action+item, it is asked rarely.")
                 .defineInRange("masteredAfter", 3, 1, 50);
+
+        b.push("exercises");
+        LEVEL = b.comment("A1 = simple sentences, A2 / B1 = complex sentences (modal verbs, weil/dass/damit, Perfekt, Passiv, relative clauses...),",
+                        "MIX = random A1/A2/B1 per task, AUTO = grows with your number of correct answers.")
+                .defineEnum("level", Level.MIX);
+        CHAIN_PERCENT = b.comment("Chance (percent) that a prompt is a chain of 2-3 different exercise types in a row.")
+                .defineInRange("chainPercent", 35, 0, 100);
+        W_TYPE = b.comment("Relative weights of the exercise types (0 = never): type the sentence.").defineInRange("weightType", 25, 0, 100);
+        W_TILES = b.comment("Build the sentence from word tiles.").defineInRange("weightTiles", 25, 0, 100);
+        W_GAP = b.comment("Fill the gaps from a word bank.").defineInRange("weightGap", 20, 0, 100);
+        W_GAPTYPE = b.comment("Type the one missing word.").defineInRange("weightGapType", 10, 0, 100);
+        W_FIX = b.comment("Find the mistake and type the correct sentence.").defineInRange("weightFix", 10, 0, 100);
+        W_PICK = b.comment("Pick the correct sentence out of three.").defineInRange("weightPick", 10, 0, 100);
+        b.pop();
 
         b.push("punishments");
         PUNISH_ENABLED = b.comment("Wheel of punishments after wrong answers. Works in single player, LAN and servers (the world applies it; every player needs the mod).")
