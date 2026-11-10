@@ -745,6 +745,90 @@
   "pie_crust": [
    "Teigboden",
    "m"
+  ],
+  "clay": [
+   "Ton",
+   "m"
+  ],
+  "deepslate": [
+   "Tiefenschiefer",
+   "m"
+  ],
+  "andesite": [
+   "Andesit",
+   "m"
+  ],
+  "diorite": [
+   "Diorit",
+   "m"
+  ],
+  "granite": [
+   "Granit",
+   "m"
+  ],
+  "sandstone": [
+   "Sandstein",
+   "m"
+  ],
+  "snow_block": [
+   "Schneeblock",
+   "m"
+  ],
+  "mycelium": [
+   "Myzel",
+   "n"
+  ],
+  "tuff": [
+   "Tuff",
+   "m"
+  ],
+  "calcite": [
+   "Kalzit",
+   "m"
+  ],
+  "basalt": [
+   "Basalt",
+   "m"
+  ],
+  "blackstone": [
+   "Schwarzstein",
+   "m"
+  ],
+  "end_stone": [
+   "Endstein",
+   "m"
+  ],
+  "soul_sand": [
+   "Seelensand",
+   "m"
+  ],
+  "magma_block": [
+   "Magmablock",
+   "m"
+  ],
+  "ice": [
+   "Eis",
+   "n"
+  ],
+  "netherrack": [
+   "Netherrack",
+   "m"
+  ],
+  "podzol": [
+   "Podsol",
+   "m"
+  ],
+  "red_sand": [
+   "Roter Sand",
+   "m"
+  ],
+  "coarse_dirt": [
+   "Grobe Erde",
+   "f"
+  ],
+  "moss_block": [
+   "Moosblock",
+   "m"
   ]
  },
  "suffixes": {
@@ -935,6 +1019,18 @@
   "_hanging_sign": [
    "Hängeschild",
    "n"
+  ],
+  "_wood": [
+   "Holzblock",
+   "m"
+  ],
+  "_stem": [
+   "Stamm",
+   "m"
+  ],
+  "_hyphae": [
+   "Hyphen",
+   "p"
   ]
  }
 }

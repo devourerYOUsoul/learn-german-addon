@@ -97,6 +97,17 @@ public final class GermanWords {
         return w;
     }
 
+    /** True if a German word exists for this item id (no logging). */
+    public static boolean known(ResourceLocation id) {
+        ensureLoaded();
+        if (exact.containsKey(id.toString()) || exact.containsKey(id.getPath())) return true;
+        String path = id.getPath();
+        for (Map.Entry<String, Word> e : suffixes) {
+            if (path.endsWith(e.getKey())) return true;
+        }
+        return false;
+    }
+
     private static synchronized void ensureLoaded() {
         if (loaded) return;
         loaded = true;

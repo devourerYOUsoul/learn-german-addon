@@ -33,6 +33,9 @@ public final class Sentences {
             out.add(norm(String.format(tpl, objectDef(w))));
             out.add(norm(String.format(tpl, objectIndef(w))));
         }
+        for (String ex : a.extras(t)) {
+            out.add(norm(ex));
+        }
         return out;
     }
 

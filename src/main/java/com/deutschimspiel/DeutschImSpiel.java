@@ -31,6 +31,8 @@ public class DeutschImSpiel {
         NeoForge.EVENT_BUS.addListener(this::onCrafted);
         NeoForge.EVENT_BUS.addListener(this::onSmelted);
         NeoForge.EVENT_BUS.addListener(this::onTick);
+        NeoForge.EVENT_BUS.addListener(Punishment::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(Punishment::onLogout);
     }
 
     private void onTooltip(ItemTooltipEvent e) {
@@ -70,6 +72,9 @@ public class DeutschImSpiel {
     }
 
     private void onTick(ClientTickEvent.Post e) {
-        PromptManager.tick(Minecraft.getInstance());
+        Minecraft mc = Minecraft.getInstance();
+        BlockWatcher.tick(mc);
+        ItemDump.tick(mc);
+        PromptManager.tick(mc);
     }
 }
