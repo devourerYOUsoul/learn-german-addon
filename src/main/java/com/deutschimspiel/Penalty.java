@@ -6,7 +6,7 @@ import net.minecraft.world.item.Items;
 import java.util.function.Supplier;
 
 /** All punishments that can land on the wheel. */
-public enum Penalty {
+public enum Penalty implements WheelItem {
     POISON("poison", () -> Items.SPIDER_EYE, 0xFF3FA34D, false),
     DAMAGE("damage", () -> Items.IRON_SWORD, 0xFFD64545, false),
     LAUNCH("launch", () -> Items.FIREWORK_ROCKET, 0xFF3AA6E0, true),
@@ -24,6 +24,26 @@ public enum Penalty {
     public final int color;
     /** Skipped in Hardcore worlds. */
     public final boolean dangerous;
+
+    @Override
+    public String key() {
+        return key;
+    }
+
+    @Override
+    public Item icon() {
+        return icon.get();
+    }
+
+    @Override
+    public int color() {
+        return color;
+    }
+
+    @Override
+    public String nameKey() {
+        return "deutschimspiel.penalty." + key + ".name";
+    }
 
     public static Penalty byKey(String key) {
         for (Penalty p : values()) {

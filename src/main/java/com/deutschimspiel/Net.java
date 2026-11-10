@@ -42,6 +42,32 @@ public final class Net {
         }
     }
 
+    /** Client -> server: "give me this reward". */
+    public record RewardRequest(String key) implements CustomPacketPayload {
+        public static final Type<RewardRequest> TYPE =
+                new Type<>(ResourceLocation.fromNamespaceAndPath(DeutschImSpiel.MODID, "reward"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, RewardRequest> CODEC =
+                StreamCodec.composite(ByteBufCodecs.STRING_UTF8, RewardRequest::key, RewardRequest::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
+    /** Client -> server: a window is open, so the player must not take damage. */
+    public record PromptState(boolean open) implements CustomPacketPayload {
+        public static final Type<PromptState> TYPE =
+                new Type<>(ResourceLocation.fromNamespaceAndPath(DeutschImSpiel.MODID, "prompt_state"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, PromptState> CODEC =
+                StreamCodec.composite(ByteBufCodecs.BOOL, PromptState::open, PromptState::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
     /** Server -> client: "you just caught this item" (fishing happens on the server). */
     public record FishNotice(String itemId) implements CustomPacketPayload {
         public static final Type<FishNotice> TYPE =
@@ -58,6 +84,8 @@ public final class Net {
     public static void register(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar r = event.registrar("1");
         r.playToServer(PunishRequest.TYPE, PunishRequest.CODEC, ServerPunish::onRequest);
+        r.playToServer(RewardRequest.TYPE, RewardRequest.CODEC, ServerRewards::onRequest);
+        r.playToServer(PromptState.TYPE, PromptState.CODEC, ServerPunish::onPromptState);
         IPayloadHandler<FishNotice> fish = FMLEnvironment.dist == Dist.CLIENT
                 ? ClientHandlers::onFish
                 : (payload, ctx) -> {};

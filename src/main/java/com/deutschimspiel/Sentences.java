@@ -57,4 +57,17 @@ public final class Sentences {
     public static String pattern(Action a, Config.Tense t, boolean food) {
         return a.templates(t, food).get(0).replace("%s", "…");
     }
+
+    /** Starts with "Ich" and names the object with a fitting article (any verb): accepted, but not counted as a clean answer. */
+    public static boolean lenient(GermanWords.Word w, String normalizedInput) {
+        String padded = " " + normalizedInput + " ";
+        if (!padded.startsWith(" ich ") || normalizedInput.split(" ").length < 3) return false;
+        String noun = norm(w.objNoun());
+        String[] arts = {norm(GermanWords.defArticle(w.objG(), true)), norm(GermanWords.indefArticle(w.objG()))};
+        for (String art : arts) {
+            String phrase = art.isEmpty() ? noun : art + " " + noun;
+            if (padded.contains(" " + phrase + " ")) return true;
+        }
+        return false;
+    }
 }

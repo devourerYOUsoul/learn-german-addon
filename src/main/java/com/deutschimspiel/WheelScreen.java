@@ -17,7 +17,8 @@ public class WheelScreen extends Screen {
     private static final long BURST_MS = 1500L;
     private static final Random RNG = new Random();
 
-    private final List<Penalty> options;
+    private final List<? extends WheelItem> options;
+    private final boolean reward;
     private final int winner;
     private final double finalAngle;
     private final long start = System.currentTimeMillis();
@@ -26,14 +27,35 @@ public class WheelScreen extends Screen {
     private boolean closing = false;
     private long doneAt = 0L;
 
-    public WheelScreen(List<Penalty> options) {
-        super(Component.translatable("deutschimspiel.wheel.title"));
+    public WheelScreen(List<? extends WheelItem> options, boolean reward) {
+        super(Component.translatable(reward ? "deutschimspiel.reward.wheel.title" : "deutschimspiel.wheel.title"));
         this.options = options;
+        this.reward = reward;
         int n = options.size();
         this.winner = RNG.nextInt(n);
         double seg = 360.0 / n;
         double local = winner * seg + seg / 2.0 + (RNG.nextDouble() - 0.5) * seg * 0.7;
         this.finalAngle = 360.0 * 5 + (360.0 - local);
+    }
+
+    private boolean shielded = false;
+
+    @Override
+    protected void init() {
+        super.init();
+        if (!shielded) {
+            shielded = true;
+            Shield.set(true);
+        }
+    }
+
+    @Override
+    public void removed() {
+        if (shielded) {
+            shielded = false;
+            Shield.set(false);
+        }
+        super.removed();
     }
 
     @Override
@@ -88,7 +110,12 @@ public class WheelScreen extends Screen {
         if (p >= 1.0 && !applied) {
             applied = true;
             doneAt = now;
-            Punishment.apply(options.get(winner));
+            WheelItem won = options.get(winner);
+            if (reward) {
+                Rewards.claim((Reward) won);
+            } else {
+                Punishment.apply((Penalty) won);
+            }
         }
         long since = applied ? now - doneAt : 0L;
 
@@ -154,7 +181,7 @@ public class WheelScreen extends Screen {
                     if (dist * Math.toRadians(delta) < 1.0) {
                         color = 0xFFFFFFFF;
                     } else {
-                        color = options.get(idx).color;
+                        color = options.get(idx).color();
                         if (applied) color = mul(color, 0.4);
                     }
                 }
@@ -179,7 +206,7 @@ public class WheelScreen extends Screen {
             int sx = cx + (int) Math.round(Math.sin(midA) * pull);
             int sy = cy - (int) Math.round(Math.cos(midA) * pull);
             int wr = radius + 3;
-            int wcol = mul(options.get(winner).color, 1.1 + 0.15 * Math.sin(since / 110.0));
+            int wcol = mul(options.get(winner).color(), 1.1 + 0.15 * Math.sin(since / 110.0));
             double wr2 = (double) wr * wr;
             for (int dy = -wr; dy < wr; dy++) {
                 double oy = dy + 0.5;
@@ -244,7 +271,7 @@ public class WheelScreen extends Screen {
                 g.pose().pushPose();
                 g.pose().translate((float) ix, (float) iy, 0.0F);
                 g.pose().scale((float) Math.min(1.0, z), (float) Math.min(1.0, z), 1.0F);
-                g.renderItem(new ItemStack(options.get(i).icon.get()), -8, -8);
+                g.renderItem(new ItemStack(options.get(i).icon()), -8, -8);
                 g.pose().popPose();
             }
         }
@@ -291,17 +318,17 @@ public class WheelScreen extends Screen {
                 int sz = 1 + pr.nextInt(2);
                 g.fill(x, y, x + sz + 1, y + sz + 1, (a8 << 24) | 0xFFE678);
             }
-            Component name = Component.translatable("deutschimspiel.penalty." + options.get(winner).key + ".name");
+            Component name = Component.translatable(options.get(winner).nameKey());
             Component line = Component.translatable("deutschimspiel.wheel.result", name);
             int tw = this.font.width(line);
             int ty = cy + base + 12;
             int bw = (int) (tw * 1.5) + 28;
             g.fill(cx - bw / 2, ty - 6, cx + bw / 2, ty + 20, 0xE60F0A1E);
-            g.renderOutline(cx - bw / 2, ty - 6, bw, 26, 0xFF000000 | options.get(winner).color);
+            g.renderOutline(cx - bw / 2, ty - 6, bw, 26, 0xFF000000 | options.get(winner).color());
             g.pose().pushPose();
             g.pose().translate(cx, ty, 0.0F);
             g.pose().scale(1.5F, 1.5F, 1.0F);
-            g.drawCenteredString(this.font, line, 0, 0, 0xFF000000 | options.get(winner).color);
+            g.drawCenteredString(this.font, line, 0, 0, 0xFF000000 | options.get(winner).color());
             g.pose().popPose();
             if (!closing && since > HOLD_MS) {
                 closing = true;

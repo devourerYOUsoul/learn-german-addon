@@ -29,6 +29,11 @@ public final class Config {
     public static final java.util.Map<String, ModConfigSpec.BooleanValue> PENALTY_ON = new java.util.HashMap<>();
     public static final String[] PENALTY_KEYS = {"poison", "damage", "launch", "creepers", "lightning", "loser",
             "villagers", "pumpkin", "hunger", "lose_item", "break_armor"};
+    public static final ModConfigSpec.BooleanValue REWARDS_ENABLED;
+    public static final ModConfigSpec.IntValue REWARD_EVERY;
+    public static final String[] REWARD_KEYS = {"meat", "diamond_pickaxe", "diamonds", "iron_armor", "enchanted_book",
+            "emeralds", "golden_apples", "fishing_rod", "iron_tool"};
+    public static final java.util.Map<String, ModConfigSpec.BooleanValue> REWARD_ON = new java.util.HashMap<>();
     public static final ModConfigSpec.IntValue CREEPER_COUNT;
     public static final ModConfigSpec.IntValue VILLAGER_COUNT;
     public static final ModConfigSpec.IntValue PUMPKIN_SECONDS;
@@ -90,6 +95,16 @@ public final class Config {
                 .defineInRange("damageHp", 4, 1, 19);
         LAUNCH_MIN_HEALTH = b.comment("Launch only if your health is above this value (fall damage!). Otherwise poison is used.")
                 .defineInRange("launchMinHealth", 14, 1, 20);
+        b.pop();
+        b.push("rewards");
+        REWARDS_ENABLED = b.comment("Reward wheel after every N correct answers.").define("enabled", true);
+        REWARD_EVERY = b.comment("Correct answers (no hints) needed for one spin of the reward wheel.")
+                .defineInRange("everyCorrect", 10, 1, 1000);
+        b.push("on");
+        for (String k : REWARD_KEYS) {
+            REWARD_ON.put(k, b.define(k, true));
+        }
+        b.pop();
         b.pop();
         SPEC = b.build();
     }

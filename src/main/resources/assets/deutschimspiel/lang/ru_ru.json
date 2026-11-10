@@ -113,5 +113,19 @@
   "deutschimspiel.chip.place_wall": "НА СТЕНУ",
   "deutschimspiel.prompt.place_wall.present": "Я вешаю на стену: %s",
   "deutschimspiel.prompt.place_wall.perfect": "Я повесил на стену: %s",
-  "deutschimspiel.broadcast": "%s получает наказание: %s"
+  "deutschimspiel.broadcast": "%s получает наказание: %s",
+  "deutschimspiel.reward.wheel.title": "Колесо наград!",
+  "deutschimspiel.reward.meat.name": "10 жареных стейков",
+  "deutschimspiel.reward.diamond_pickaxe.name": "Алмазная кирка",
+  "deutschimspiel.reward.diamonds.name": "3 алмаза",
+  "deutschimspiel.reward.iron_armor.name": "Железная броня",
+  "deutschimspiel.reward.enchanted_book.name": "Книга зачарований",
+  "deutschimspiel.reward.emeralds.name": "3 изумруда",
+  "deutschimspiel.reward.golden_apples.name": "5 золотых яблок",
+  "deutschimspiel.reward.fishing_rod.name": "Зачарованная удочка",
+  "deutschimspiel.reward.iron_tool.name": "Железный инструмент",
+  "deutschimspiel.reward.got": "Получено: %s",
+  "deutschimspiel.reward.soon": "Награда за 10 ответов! Нажми Enter или «Закрыть» — крутим колесо.",
+  "deutschimspiel.broadcast.reward": "%s получает награду: %s",
+  "deutschimspiel.feedback.accepted": "Принято! Образец: %s"
 }

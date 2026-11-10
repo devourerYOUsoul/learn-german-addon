@@ -17,6 +17,7 @@ public final class Progress {
         public Map<String, Integer> streak = new HashMap<>();
         public int correct;
         public int wrong;
+        public int sinceReward;
     }
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -51,6 +52,20 @@ public final class Progress {
 
     public static String key(Action a, String subjectKey) {
         return a.name() + ":" + subjectKey;
+    }
+
+    /** Counts one clean correct answer. @return true when the reward wheel is due. */
+    public static synchronized boolean countReward(int every) {
+        Data d = get();
+        d.sinceReward++;
+        boolean hit = d.sinceReward >= every;
+        if (hit) d.sinceReward = 0;
+        try {
+            Files.writeString(file(), GSON.toJson(d), StandardCharsets.UTF_8);
+        } catch (Exception ignored) {
+            // not critical
+        }
+        return hit;
     }
 
     public static synchronized void record(Action a, String subjectKey, boolean success) {

@@ -113,5 +113,19 @@
   "deutschimspiel.chip.place_wall": "WALL",
   "deutschimspiel.prompt.place_wall.present": "I hang on the wall: %s",
   "deutschimspiel.prompt.place_wall.perfect": "I hung on the wall: %s",
-  "deutschimspiel.broadcast": "%s gets a penalty: %s"
+  "deutschimspiel.broadcast": "%s gets a penalty: %s",
+  "deutschimspiel.reward.wheel.title": "Reward wheel!",
+  "deutschimspiel.reward.meat.name": "10 cooked steaks",
+  "deutschimspiel.reward.diamond_pickaxe.name": "Diamond pickaxe",
+  "deutschimspiel.reward.diamonds.name": "3 diamonds",
+  "deutschimspiel.reward.iron_armor.name": "Iron armor piece",
+  "deutschimspiel.reward.enchanted_book.name": "Enchanted book",
+  "deutschimspiel.reward.emeralds.name": "3 emeralds",
+  "deutschimspiel.reward.golden_apples.name": "5 golden apples",
+  "deutschimspiel.reward.fishing_rod.name": "Enchanted fishing rod",
+  "deutschimspiel.reward.iron_tool.name": "Iron tool",
+  "deutschimspiel.reward.got": "You got: %s",
+  "deutschimspiel.reward.soon": "Reward for 10 answers! Press Enter or Close to spin the wheel.",
+  "deutschimspiel.broadcast.reward": "%s gets a reward: %s",
+  "deutschimspiel.feedback.accepted": "Accepted! Model sentence: %s"
 }

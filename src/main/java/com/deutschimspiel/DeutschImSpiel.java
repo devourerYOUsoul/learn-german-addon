@@ -21,6 +21,7 @@ public class DeutschImSpiel {
         modBus.addListener(Net::register);
         NeoForge.EVENT_BUS.addListener(ServerPunish::onPlayerTick);
         NeoForge.EVENT_BUS.addListener(ServerPunish::onLogout);
+        NeoForge.EVENT_BUS.addListener(ServerPunish::onIncomingDamage);
         NeoForge.EVENT_BUS.addListener(this::onFished);
     }
 

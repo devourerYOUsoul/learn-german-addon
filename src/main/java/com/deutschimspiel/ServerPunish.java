@@ -20,6 +20,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -48,6 +49,8 @@ public final class ServerPunish {
     }
 
     private static final Map<UUID, PumpkinState> PUMPKINS = new HashMap<>();
+    /** Players with an open window -> game time when the protection ends at the latest (10 minutes). */
+    private static final Map<UUID, Long> SHIELD = new HashMap<>();
 
     private ServerPunish() {}
 
@@ -64,6 +67,26 @@ public final class ServerPunish {
                         Component.translatable("deutschimspiel.penalty." + p.key + ".name")
                                 .withStyle(ChatFormatting.GOLD)).withStyle(ChatFormatting.YELLOW),
                 false);
+    }
+
+    public static void onPromptState(Net.PromptState msg, IPayloadContext ctx) {
+        if (!(ctx.player() instanceof ServerPlayer sp)) return;
+        if (msg.open()) {
+            SHIELD.put(sp.getUUID(), sp.serverLevel().getGameTime() + 12000L);
+        } else {
+            SHIELD.remove(sp.getUUID());
+        }
+    }
+
+    public static void onIncomingDamage(LivingIncomingDamageEvent e) {
+        if (!(e.getEntity() instanceof ServerPlayer sp)) return;
+        Long until = SHIELD.get(sp.getUUID());
+        if (until == null) return;
+        if (sp.serverLevel().getGameTime() >= until) {
+            SHIELD.remove(sp.getUUID());
+            return;
+        }
+        e.setCanceled(true);
     }
 
     private static int clamp(int v, int lo, int hi) {
@@ -204,6 +227,7 @@ public final class ServerPunish {
 
     public static void onLogout(PlayerEvent.PlayerLoggedOutEvent e) {
         if (!(e.getEntity() instanceof ServerPlayer sp)) return;
+        SHIELD.remove(sp.getUUID());
         PumpkinState st = PUMPKINS.get(sp.getUUID());
         if (st != null) endPumpkin(sp, st);
     }

@@ -35,6 +35,8 @@ public class SentenceScreen extends Screen {
     private boolean solved = false;
     private boolean failedOnce = false;
     private boolean recorded = false;
+    private boolean pendingReward = false;
+    private boolean shielded = false;
 
     public SentenceScreen(Action action, Subject subject) {
         super(Component.translatable("deutschimspiel.prompt.title"));
@@ -63,6 +65,10 @@ public class SentenceScreen extends Screen {
         input.setMaxLength(120);
         addRenderableWidget(input);
         setInitialFocus(input);
+        if (!shielded) {
+            shielded = true;
+            Shield.set(true);
+        }
 
         int bw = 68;
         int gap = 5;
@@ -100,20 +106,28 @@ public class SentenceScreen extends Screen {
         if (n.isEmpty()) return;
         boolean ok = strict.contains(n) || (word.objG() == 'p' && bare.contains(n));
         boolean almost = !ok && bare.contains(n);
-        if (ok || almost) {
+        boolean lenient = !ok && !almost && Sentences.lenient(word, n);
+        if (ok || almost || lenient) {
             solved = true;
             if (!recorded) {
                 recorded = true;
                 Progress.record(action, subject.key(), !failedOnce && hintLevel == 0 && ok);
+                if (ok && hintLevel == 0 && Rewards.available().size() > 0
+                        && Progress.countReward(Config.REWARD_EVERY.get())) {
+                    pendingReward = true;
+                }
             }
             if (ok) {
                 feedback = Component.translatable("deutschimspiel.feedback.correct");
                 feedbackColor = theme.ok();
+            } else if (lenient) {
+                feedback = Component.translatable("deutschimspiel.feedback.accepted", primary);
+                feedbackColor = theme.warn();
             } else {
                 feedback = Component.translatable("deutschimspiel.feedback.almost", primary);
                 feedbackColor = theme.warn();
             }
-            penalty = Component.empty();
+            penalty = pendingReward ? Component.translatable("deutschimspiel.reward.soon") : Component.empty();
             Punishment.onCorrect();
         } else {
             markFailed();
@@ -122,7 +136,7 @@ public class SentenceScreen extends Screen {
             if (Punishment.onWrong()) {
                 List<Penalty> opts = Punishment.available();
                 if (!opts.isEmpty()) {
-                    Minecraft.getInstance().setScreen(new WheelScreen(opts));
+                    Minecraft.getInstance().setScreen(new WheelScreen(opts, false));
                     return;
                 }
             }
@@ -150,6 +164,28 @@ public class SentenceScreen extends Screen {
             return true;
         }
         return super.keyPressed(key, scancode, modifiers);
+    }
+
+    @Override
+    public void onClose() {
+        if (pendingReward) {
+            pendingReward = false;
+            List<Reward> rewards = Rewards.available();
+            if (!rewards.isEmpty()) {
+                Minecraft.getInstance().setScreen(new WheelScreen(rewards, true));
+                return;
+            }
+        }
+        super.onClose();
+    }
+
+    @Override
+    public void removed() {
+        if (shielded) {
+            shielded = false;
+            Shield.set(false);
+        }
+        super.removed();
     }
 
     @Override
