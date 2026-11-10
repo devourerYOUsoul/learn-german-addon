@@ -3,6 +3,8 @@ package com.deutschimspiel;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.loading.FMLPaths;
@@ -29,6 +31,11 @@ public final class ItemDump {
                 if (id.getPath().equals("air")) continue;
                 if (GermanWords.known(id)) continue;
                 lines.add(id + " | " + new ItemStack(item).getHoverName().getString());
+            }
+            for (EntityType<?> t : BuiltInRegistries.ENTITY_TYPE) {
+                ResourceLocation id = BuiltInRegistries.ENTITY_TYPE.getKey(t);
+                if (t.getCategory() == MobCategory.MISC || GermanWords.knownEntity(id)) continue;
+                lines.add("entity:" + id + " | " + t.getDescription().getString());
             }
             Collections.sort(lines);
             Files.write(FMLPaths.CONFIGDIR.get().resolve("deutschimspiel-items.txt"), lines, StandardCharsets.UTF_8);

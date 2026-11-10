@@ -1,80 +1,33 @@
 package com.deutschimspiel;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
-import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
-import java.util.List;
-
-/** Client-only addon: German names in tooltips + "write the sentence" prompts. */
-@Mod(value = DeutschImSpiel.MODID, dist = Dist.CLIENT)
+/**
+ * Common part (runs on the host's world and on dedicated servers): receives punishment requests
+ * from players and tells the fisher's client about a catch. The client part is DeutschImSpielClient.
+ */
+@Mod(DeutschImSpiel.MODID)
 public class DeutschImSpiel {
     public static final String MODID = "deutschimspiel";
 
-    public DeutschImSpiel(IEventBus modBus, ModContainer container) {
-        container.registerConfig(ModConfig.Type.CLIENT, Config.SPEC);
-        NeoForge.EVENT_BUS.addListener(this::onTooltip);
-        NeoForge.EVENT_BUS.addListener(this::onUseFinish);
-        NeoForge.EVENT_BUS.addListener(this::onCrafted);
-        NeoForge.EVENT_BUS.addListener(this::onSmelted);
-        NeoForge.EVENT_BUS.addListener(this::onTick);
-        NeoForge.EVENT_BUS.addListener(Punishment::onPlayerTick);
-        NeoForge.EVENT_BUS.addListener(Punishment::onLogout);
+    public DeutschImSpiel(IEventBus modBus) {
+        modBus.addListener(Net::register);
+        NeoForge.EVENT_BUS.addListener(ServerPunish::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(ServerPunish::onLogout);
+        NeoForge.EVENT_BUS.addListener(this::onFished);
     }
 
-    private void onTooltip(ItemTooltipEvent e) {
-        if (!Config.SHOW_TOOLTIPS.get()) return;
-        ItemStack st = e.getItemStack();
-        if (st.isEmpty()) return;
-        GermanWords.Word w = GermanWords.lookup(st);
-        if (w == null) return;
-        List<Component> tip = e.getToolTip();
-        tip.add(Math.min(1, tip.size()), w.tooltipLine());
-    }
-
-    private boolean isLocalClientPlayer(Player p) {
-        Minecraft mc = Minecraft.getInstance();
-        return p != null && p == mc.player && p.level().isClientSide();
-    }
-
-    private void onUseFinish(LivingEntityUseItemEvent.Finish e) {
-        if (!(e.getEntity() instanceof Player p) || !isLocalClientPlayer(p)) return;
-        ItemStack st = e.getItem();
-        if (st.isEmpty()) return;
-        if (st.getUseAnimation() == UseAnim.DRINK) {
-            PromptManager.offer(Action.DRINK, st);
-        } else if (st.has(DataComponents.FOOD)) {
-            PromptManager.offer(Action.EAT, st);
-        }
-    }
-
-    private void onCrafted(PlayerEvent.ItemCraftedEvent e) {
-        if (!isLocalClientPlayer(e.getEntity())) return;
-        PromptManager.offer(Action.CRAFT, e.getCrafting());
-    }
-
-    private void onSmelted(PlayerEvent.ItemSmeltedEvent e) {
-        if (!isLocalClientPlayer(e.getEntity())) return;
-        PromptManager.offer(Action.SMELT, e.getSmelting());
-    }
-
-    private void onTick(ClientTickEvent.Post e) {
-        Minecraft mc = Minecraft.getInstance();
-        BlockWatcher.tick(mc);
-        ItemDump.tick(mc);
-        PromptManager.tick(mc);
+    private void onFished(ItemFishedEvent e) {
+        if (!(e.getEntity() instanceof ServerPlayer sp) || e.getDrops().isEmpty()) return;
+        ItemStack first = e.getDrops().get(0);
+        if (first.isEmpty()) return;
+        PacketDistributor.sendToPlayer(sp, new Net.FishNotice(BuiltInRegistries.ITEM.getKey(first.getItem()).toString()));
     }
 }

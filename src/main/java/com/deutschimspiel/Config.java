@@ -8,8 +8,16 @@ public final class Config {
 
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue SHOW_TOOLTIPS;
+    public static final ModConfigSpec.BooleanValue SHOW_LOOKAT;
+    public static final ModConfigSpec.IntValue LOOK_X;
+    public static final ModConfigSpec.IntValue LOOK_Y;
     public static final ModConfigSpec.BooleanValue PROMPTS_ENABLED;
     public static final ModConfigSpec.BooleanValue BLOCK_ACTIONS;
+    public static final ModConfigSpec.IntValue COMBAT_COOLDOWN_SECONDS;
+    public static final String[] ACTION_KEYS = {"eat", "drink", "craft", "smelt", "chop", "mine", "dig", "enchant", "anvil",
+            "brew", "smith", "stonecut", "weave", "map", "grind", "trade", "fish", "feed", "plant", "harvest",
+            "hit", "shoot", "block", "place_floor", "place_wall"};
+    public static final java.util.Map<String, ModConfigSpec.BooleanValue> ACTION_ON = new java.util.HashMap<>();
     public static final ModConfigSpec.EnumValue<Tense> TENSE;
     public static final ModConfigSpec.EnumValue<ThemeId> THEME;
     public static final ModConfigSpec.IntValue COOLDOWN_SECONDS;
@@ -33,10 +41,23 @@ public final class Config {
         ModConfigSpec.Builder b = new ModConfigSpec.Builder();
         SHOW_TOOLTIPS = b.comment("Show the German name under the item name in tooltips.")
                 .define("showTooltips", true);
+        SHOW_LOOKAT = b.comment("Show the German name of the block / dropped item you are looking at (small panel).")
+                .define("showLookAt", true);
+        LOOK_X = b.comment("Horizontal offset of the look-at panel from the screen centre (GUI pixels).")
+                .defineInRange("lookAtX", 0, -800, 800);
+        LOOK_Y = b.comment("Distance from the top of the screen (GUI pixels). Raise it if it overlaps Jade.")
+                .defineInRange("lookAtY", 44, 0, 800);
         PROMPTS_ENABLED = b.comment("Open the 'write the sentence' window after actions.")
                 .define("promptsEnabled", true);
         BLOCK_ACTIONS = b.comment("Also ask after breaking blocks (chopping wood, mining, digging).")
                 .define("blockActions", true);
+        COMBAT_COOLDOWN_SECONDS = b.comment("Extra cooldown (seconds) for hits, bow shots and shield blocks, so they do not get annoying.")
+                .defineInRange("combatCooldownSeconds", 240, 0, 7200);
+        b.push("actions");
+        for (String k : ACTION_KEYS) {
+            ACTION_ON.put(k, b.define(k, true));
+        }
+        b.pop();
         TENSE = b.comment("PRESENT = 'Ich esse den Apfel', PERFECT = 'Ich habe den Apfel gegessen'.")
                 .defineEnum("tense", Tense.PRESENT);
         THEME = b.comment("Look of the window: PERGAMENT (parchment), MAGIE (arcane), MODERN (dark glass).")
@@ -49,7 +70,7 @@ public final class Config {
                 .defineInRange("masteredAfter", 3, 1, 50);
 
         b.push("punishments");
-        PUNISH_ENABLED = b.comment("Wheel of punishments after wrong answers. Works only in single player (own world).")
+        PUNISH_ENABLED = b.comment("Wheel of punishments after wrong answers. Works in single player, LAN and servers (the world applies it; every player needs the mod).")
                 .define("enabled", true);
         WHEEL_AFTER = b.comment("The wheel spins after this many wrong answers in a row.")
                 .defineInRange("wheelAfterWrong", 2, 1, 20);

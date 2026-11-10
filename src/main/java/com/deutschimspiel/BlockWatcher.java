@@ -4,6 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -48,6 +50,12 @@ public final class BlockWatcher {
     }
 
     private static void onBroken(BlockState broken) {
+        if (broken.is(BlockTags.CROPS) || broken.is(Blocks.MELON) || broken.is(Blocks.PUMPKIN)) {
+            boolean mature = broken.is(Blocks.MELON) || broken.is(Blocks.PUMPKIN)
+                    || (broken.getBlock() instanceof CropBlock cb && cb.isMaxAge(broken));
+            if (mature) PromptManager.offer(Action.HARVEST, Subject.ofBlock(broken));
+            return;
+        }
         ItemStack item = new ItemStack(broken.getBlock().asItem());
         if (item.isEmpty()) return;
         if (broken.is(BlockTags.LOGS)) {

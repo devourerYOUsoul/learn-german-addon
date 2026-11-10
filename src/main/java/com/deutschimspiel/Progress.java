@@ -2,8 +2,6 @@ package com.deutschimspiel;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.loading.FMLPaths;
 
 import java.io.Reader;
@@ -13,7 +11,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-/** Tiny progress file: streaks per action+item, total correct/wrong. */
+/** Tiny progress file: streaks per action+subject, total correct/wrong. */
 public final class Progress {
     public static class Data {
         public Map<String, Integer> streak = new HashMap<>();
@@ -51,13 +49,13 @@ public final class Progress {
         return data;
     }
 
-    public static String key(Action a, ItemStack s) {
-        return a.name() + ":" + BuiltInRegistries.ITEM.getKey(s.getItem()).getPath();
+    public static String key(Action a, String subjectKey) {
+        return a.name() + ":" + subjectKey;
     }
 
-    public static synchronized void record(Action a, ItemStack s, boolean success) {
+    public static synchronized void record(Action a, String subjectKey, boolean success) {
         Data d = get();
-        String k = key(a, s);
+        String k = key(a, subjectKey);
         if (success) {
             d.correct++;
             d.streak.merge(k, 1, Integer::sum);

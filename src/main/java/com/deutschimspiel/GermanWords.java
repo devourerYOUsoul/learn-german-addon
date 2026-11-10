@@ -52,6 +52,8 @@ public final class GermanWords {
 
     private static final Word NONE = new Word("", 'm', null, 'm');
     private static final Map<String, Word> exact = new HashMap<>();
+    private static final Map<String, Word> entities = new HashMap<>();
+    private static final Map<String, Word> entityCache = new HashMap<>();
     private static final List<Map.Entry<String, Word>> suffixes = new ArrayList<>();
     private static final Map<String, Word> cache = new HashMap<>();
     private static final Set<String> missingLogged = new HashSet<>();
@@ -78,8 +80,12 @@ public final class GermanWords {
     }
 
     public static Word lookup(ItemStack stack) {
+        return lookupId(BuiltInRegistries.ITEM.getKey(stack.getItem()));
+    }
+
+    /** Word for an item or block id. */
+    public static Word lookupId(ResourceLocation id) {
         ensureLoaded();
-        ResourceLocation id = BuiltInRegistries.ITEM.getKey(stack.getItem());
         String full = id.toString();
         Word cached = cache.get(full);
         if (cached != null) return cached == NONE ? null : cached;
@@ -95,6 +101,24 @@ public final class GermanWords {
         cache.put(full, w == null ? NONE : w);
         if (w == null && !"minecraft:air".equals(full)) logMissing(full);
         return w;
+    }
+
+    /** Word for an entity type id (cow, zombie, ...). */
+    public static Word lookupEntity(ResourceLocation id) {
+        ensureLoaded();
+        String full = id.toString();
+        Word cached = entityCache.get(full);
+        if (cached != null) return cached == NONE ? null : cached;
+        Word w = entities.get(full);
+        if (w == null) w = entities.get(id.getPath());
+        entityCache.put(full, w == null ? NONE : w);
+        if (w == null) logMissing("entity:" + full);
+        return w;
+    }
+
+    public static boolean knownEntity(ResourceLocation id) {
+        ensureLoaded();
+        return entities.containsKey(id.toString()) || entities.containsKey(id.getPath());
     }
 
     /** True if a German word exists for this item id (no logging). */
@@ -140,6 +164,12 @@ public final class GermanWords {
                 if (w != null) exact.put(e.getKey(), w);
             }
         }
+        if (root.has("entities")) {
+            for (Map.Entry<String, JsonElement> e : root.getAsJsonObject("entities").entrySet()) {
+                Word w = toWord(e.getValue());
+                if (w != null) entities.put(e.getKey(), w);
+            }
+        }
         if (root.has("suffixes")) {
             for (Map.Entry<String, JsonElement> e : root.getAsJsonObject("suffixes").entrySet()) {
                 Word w = toWord(e.getValue());
@@ -149,6 +179,7 @@ public final class GermanWords {
             }
         }
         cache.clear();
+        entityCache.clear();
     }
 
     private static Word toWord(JsonElement el) {

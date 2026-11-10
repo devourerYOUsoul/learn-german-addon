@@ -829,6 +829,58 @@
   "moss_block": [
    "Moosblock",
    "m"
+  ],
+  "carrots": [
+   "Karotte",
+   "f"
+  ],
+  "potatoes": [
+   "Kartoffel",
+   "f"
+  ],
+  "beetroots": [
+   "Rote Bete",
+   "f"
+  ],
+  "nether_wart": [
+   "Netherwarze",
+   "f"
+  ],
+  "soul_torch": [
+   "Seelenfackel",
+   "f"
+  ],
+  "redstone_torch": [
+   "Redstone-Fackel",
+   "f"
+  ],
+  "splash_potion": [
+   "Wurftrank",
+   "m"
+  ],
+  "lingering_potion": [
+   "Verweiltrank",
+   "m"
+  ],
+  "enchanted_book": [
+   "Zauberbuch",
+   "n"
+  ],
+  "torchflower": [
+   "Fackellilie",
+   "f"
+  ],
+  "pitcher_plant": [
+   "Krugpflanze",
+   "f"
+  ],
+  "cocoa": [
+   "Kakaobohne",
+   "f"
+  ],
+  "bamboo": [
+   "Bambus",
+   "m"
   ]
  },
  "suffixes": {
@@ -1031,6 +1083,308 @@
   "_hyphae": [
    "Hyphen",
    "p"
+  ]
+ },
+ "entities": {
+  "cow": [
+   "Kuh",
+   "f"
+  ],
+  "pig": [
+   "Schwein",
+   "n"
+  ],
+  "sheep": [
+   "Schaf",
+   "n"
+  ],
+  "chicken": [
+   "Huhn",
+   "n"
+  ],
+  "horse": [
+   "Pferd",
+   "n"
+  ],
+  "donkey": [
+   "Esel",
+   "m"
+  ],
+  "mule": [
+   "Maultier",
+   "n"
+  ],
+  "llama": [
+   "Lama",
+   "n"
+  ],
+  "trader_llama": [
+   "Händlerlama",
+   "n"
+  ],
+  "cat": [
+   "Katze",
+   "f"
+  ],
+  "ocelot": [
+   "Ozelot",
+   "m"
+  ],
+  "wolf": [
+   "Wolf",
+   "m"
+  ],
+  "rabbit": [
+   "Kaninchen",
+   "n"
+  ],
+  "fox": [
+   "Fuchs",
+   "m"
+  ],
+  "bee": [
+   "Biene",
+   "f"
+  ],
+  "camel": [
+   "Kamel",
+   "n"
+  ],
+  "goat": [
+   "Ziege",
+   "f"
+  ],
+  "turtle": [
+   "Schildkröte",
+   "f"
+  ],
+  "panda": [
+   "Panda",
+   "m"
+  ],
+  "polar_bear": [
+   "Eisbär",
+   "m"
+  ],
+  "axolotl": [
+   "Axolotl",
+   "m"
+  ],
+  "frog": [
+   "Frosch",
+   "m"
+  ],
+  "parrot": [
+   "Papagei",
+   "m"
+  ],
+  "sniffer": [
+   "Schnüffler",
+   "m"
+  ],
+  "armadillo": [
+   "Gürteltier",
+   "n"
+  ],
+  "mooshroom": [
+   "Pilzkuh",
+   "f"
+  ],
+  "strider": [
+   "Schreiter",
+   "m"
+  ],
+  "hoglin": [
+   "Hoglin",
+   "m"
+  ],
+  "zombie": [
+   "Zombie",
+   "m"
+  ],
+  "husk": [
+   "Wüstenzombie",
+   "m"
+  ],
+  "drowned": [
+   "Ertrunkene",
+   "f"
+  ],
+  "skeleton": [
+   "Skelett",
+   "n"
+  ],
+  "stray": [
+   "Eisskelett",
+   "n"
+  ],
+  "creeper": [
+   "Creeper",
+   "m"
+  ],
+  "spider": [
+   "Spinne",
+   "f"
+  ],
+  "cave_spider": [
+   "Höhlenspinne",
+   "f"
+  ],
+  "enderman": [
+   "Enderman",
+   "m"
+  ],
+  "slime": [
+   "Schleim",
+   "m"
+  ],
+  "witch": [
+   "Hexe",
+   "f"
+  ],
+  "pillager": [
+   "Plünderer",
+   "m"
+  ],
+  "vindicator": [
+   "Diener",
+   "m"
+  ],
+  "evoker": [
+   "Magier",
+   "m"
+  ],
+  "ravager": [
+   "Verwüster",
+   "m"
+  ],
+  "villager": [
+   "Dorfbewohner",
+   "m"
+  ],
+  "wandering_trader": [
+   "Wanderhändler",
+   "m"
+  ],
+  "iron_golem": [
+   "Eisengolem",
+   "m"
+  ],
+  "snow_golem": [
+   "Schneegolem",
+   "m"
+  ],
+  "blaze": [
+   "Lohe",
+   "f"
+  ],
+  "ghast": [
+   "Ghast",
+   "m"
+  ],
+  "piglin": [
+   "Piglin",
+   "m"
+  ],
+  "zombified_piglin": [
+   "Zombie-Piglin",
+   "m"
+  ],
+  "phantom": [
+   "Phantom",
+   "n"
+  ],
+  "silverfish": [
+   "Silberfischchen",
+   "n"
+  ],
+  "guardian": [
+   "Wächter",
+   "m"
+  ],
+  "squid": [
+   "Tintenfisch",
+   "m"
+  ],
+  "glow_squid": [
+   "Leuchttintenfisch",
+   "m"
+  ],
+  "cod": [
+   "Kabeljau",
+   "m"
+  ],
+  "salmon": [
+   "Lachs",
+   "m"
+  ],
+  "dolphin": [
+   "Delfin",
+   "m"
+  ],
+  "bat": [
+   "Fledermaus",
+   "f"
+  ],
+  "magma_cube": [
+   "Magmawürfel",
+   "m"
+  ],
+  "warden": [
+   "Wächter",
+   "m"
+  ],
+  "zoglin": [
+   "Zoglin",
+   "m"
+  ],
+  "shulker": [
+   "Shulker",
+   "m"
+  ],
+  "endermite": [
+   "Endermite",
+   "f"
+  ],
+  "vex": [
+   "Plagegeist",
+   "m"
+  ],
+  "wither_skeleton": [
+   "Witherskelett",
+   "n"
+  ],
+  "bogged": [
+   "Morastiger",
+   "m"
+  ],
+  "breeze": [
+   "Windböe",
+   "f"
+  ],
+  "tropical_fish": [
+   "Tropenfisch",
+   "m"
+  ],
+  "pufferfish": [
+   "Kugelfisch",
+   "m"
+  ],
+  "allay": [
+   "Hilfsgeist",
+   "m"
+  ],
+  "tadpole": [
+   "Kaulquappe",
+   "f"
+  ],
+  "skeleton_horse": [
+   "Skelettpferd",
+   "n"
+  ],
+  "zombie_villager": [
+   "Zombie-Dorfbewohner",
+   "m"
   ]
  }
 }

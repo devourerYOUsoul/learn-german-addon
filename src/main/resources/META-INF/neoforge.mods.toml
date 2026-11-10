@@ -4,11 +4,11 @@ license="MIT"
 
 [[mods]]
 modId="deutschimspiel"
-version="0.2.0"
+version="0.3.0"
 displayName="Deutsch im Spiel"
 description='''
 Shows German item names under the item name and asks you to write short German sentences
-after actions (eating, crafting, smelting). Client-side only.
+after actions. Install it on every player's side (also works in LAN / Radmin games).
 '''
 
 [[dependencies.deutschimspiel]]
@@ -16,11 +16,11 @@ modId="neoforge"
 type="required"
 versionRange="[21.1.0,)"
 ordering="NONE"
-side="CLIENT"
+side="BOTH"
 
 [[dependencies.deutschimspiel]]
 modId="minecraft"
 type="required"
 versionRange="[1.21.1,1.22)"
 ordering="NONE"
-side="CLIENT"
+side="BOTH"

@@ -25,6 +25,13 @@ public enum Penalty {
     /** Skipped in Hardcore worlds. */
     public final boolean dangerous;
 
+    public static Penalty byKey(String key) {
+        for (Penalty p : values()) {
+            if (p.key.equals(key)) return p;
+        }
+        return null;
+    }
+
     Penalty(String key, Supplier<Item> icon, int color, boolean dangerous) {
         this.key = key;
         this.icon = icon;

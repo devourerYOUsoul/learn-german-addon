@@ -18,7 +18,7 @@ public class SentenceScreen extends Screen {
     private static final int PH = 206;
 
     private final Action action;
-    private final ItemStack stack;
+    private final Subject subject;
     private final GermanWords.Word word;
     private final Config.Tense tense;
     private final boolean food;
@@ -36,13 +36,13 @@ public class SentenceScreen extends Screen {
     private boolean failedOnce = false;
     private boolean recorded = false;
 
-    public SentenceScreen(Action action, ItemStack stack, GermanWords.Word word) {
+    public SentenceScreen(Action action, Subject subject) {
         super(Component.translatable("deutschimspiel.prompt.title"));
         this.action = action;
-        this.stack = stack;
-        this.word = word;
+        this.subject = subject;
+        this.word = subject.word();
         this.tense = Config.TENSE.get();
-        this.food = stack.has(DataComponents.FOOD);
+        this.food = subject.food();
         this.strict = Sentences.strict(action, word, tense, food);
         this.bare = Sentences.bare(action, word, tense, food);
         this.primary = Sentences.primary(action, word, tense, food);
@@ -81,7 +81,7 @@ public class SentenceScreen extends Screen {
     private Component promptComponent() {
         String which = action == Action.SMELT ? (food ? "smelt_food" : "smelt_other") : action.key;
         String t = tense == Config.Tense.PRESENT ? "present" : "perfect";
-        return Component.translatable("deutschimspiel.prompt." + which + "." + t, stack.getHoverName());
+        return Component.translatable("deutschimspiel.prompt." + which + "." + t, subject.name());
     }
 
     private void markFailed() {
@@ -89,7 +89,7 @@ public class SentenceScreen extends Screen {
             failedOnce = true;
             if (!recorded) {
                 recorded = true;
-                Progress.record(action, stack, false);
+                Progress.record(action, subject.key(), false);
             }
         }
     }
@@ -104,7 +104,7 @@ public class SentenceScreen extends Screen {
             solved = true;
             if (!recorded) {
                 recorded = true;
-                Progress.record(action, stack, !failedOnce && hintLevel == 0 && ok);
+                Progress.record(action, subject.key(), !failedOnce && hintLevel == 0 && ok);
             }
             if (ok) {
                 feedback = Component.translatable("deutschimspiel.feedback.correct");
@@ -154,7 +154,7 @@ public class SentenceScreen extends Screen {
 
     @Override
     public boolean isPauseScreen() {
-        return false;
+        return true;
     }
 
     private static void fillRound(GuiGraphics g, int x, int y, int w, int h, int c) {
@@ -225,7 +225,7 @@ public class SentenceScreen extends Screen {
         g.pose().pushPose();
         g.pose().translate(x + 20, y + 48, 0);
         g.pose().scale(3.0F, 3.0F, 1.0F);
-        g.renderItem(stack, 0, 0);
+        g.renderItem(subject.icon(), 0, 0);
         g.pose().popPose();
 
         List<FormattedCharSequence> lines = this.font.split(promptComponent(), PW - 100);
@@ -248,7 +248,7 @@ public class SentenceScreen extends Screen {
         g.drawCenteredString(this.font, feedback, x + PW / 2, y + 168, feedbackColor);
         g.drawCenteredString(this.font, penalty, x + PW / 2, y + 179, theme.bad());
         Progress.Data d = Progress.get();
-        int streak = d.streak.getOrDefault(Progress.key(action, stack), 0);
+        int streak = d.streak.getOrDefault(Progress.key(action, subject.key()), 0);
         g.drawCenteredString(this.font,
                 Component.translatable("deutschimspiel.footer", d.correct, d.wrong, streak),
                 x + PW / 2, y + 192, theme.hint());
