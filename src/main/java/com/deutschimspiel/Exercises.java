@@ -27,7 +27,7 @@ public final class Exercises {
 
     /** ru = extra Russian instruction lines; tokens = words of the main answer (punctuation attached). */
     public record Task(String level, List<String> ru, String primary, Set<String> accepted, List<String> tokens,
-                       List<String> forms, List<String> smart, String adjStem) {}
+                       List<String> forms, List<String> smart, String adjStem, List<String> tips) {}
 
     // ---------------------------------------------------------------- data
 
@@ -248,6 +248,7 @@ public final class Exercises {
         Frame f;
         final List<String> ru = new ArrayList<>();
         final List<String> smart = new ArrayList<>();
+        final List<String> tips = new ArrayList<>();
         boolean forceMod;
         boolean allowIndef = true;
     }
@@ -309,6 +310,7 @@ public final class Exercises {
         if (lvl == Config.Level.A1) {
             Main m = Config.TENSE.get() == Config.Tense.PERFECT ? PERF : PRES;
             sp.f = m::v2;
+            sp.tips.add("Порядок: подлежащее, глагол, предмет с артиклем (der → den, die и das не меняются).");
             return sp;
         }
         boolean b1 = lvl == Config.Level.B1;
@@ -324,12 +326,14 @@ public final class Exercises {
             case 1 -> {
                 m = PERF;
                 sp.ru.add("Скажи в Perfekt (прошедшее время).");
+                sp.tips.add("Perfekt: habe + предмет + Partizip II в самом конце (gegessen, gebaut…).");
                 sp.smart.addAll(List.of("hat", "bin", "ist"));
             }
             case 2 -> {
                 Modal md = pick(MODALS, r);
                 m = modal(md);
                 sp.ru.add("С модальным глаголом «" + md.inf() + "» (" + md.ru() + ").");
+                sp.tips.add("Модальный глагол стоит на 2-м месте, смысловой глагол — инфинитивом в самом конце.");
                 for (Modal o : MODALS) if (o != md) sp.smart.add(o.ich());
             }
             case 3 -> {
@@ -337,12 +341,14 @@ public final class Exercises {
                 String[] e = pick(Arrays.asList(perf ? ADV_PERF : ADV_PRES), r).split("\\|");
                 m = advFront(e[0].toLowerCase(Locale.ROOT), perf ? PERF : PRES);
                 sp.ru.add("Начни предложение со слова «" + e[0] + "» (" + e[1] + ")." + (perf ? " Время: Perfekt." : ""));
+                sp.tips.add("После первого слова сразу идёт глагол, потом «ich»: «Dann esse ich …».");
                 sp.smart.addAll(List.of("ich", "dann", "jetzt"));
             }
             case 4 -> {
                 m = passive();
                 sp.allowIndef = false;
                 sp.ru.add("Скажи в пассиве (Passiv): предмет — подлежащее, «wird/werden».");
+                sp.tips.add("Passiv: предмет (в именительном: der/die/das) + wird/werden + … + Partizip II в конце.");
                 sp.smart.addAll(List.of("ist", "wurde", "wirst", "ich"));
             }
             default -> {
@@ -365,6 +371,9 @@ public final class Exercises {
             String conj = conjs[r.nextInt(conjs.length)];
             Cl cl = conj.equals("damit") ? pick(GOALS, r) : pick(FACTS, r);
             sp.ru.add(afterLine(conj, cl.ru()));
+            sp.tips.add(conj.equals("denn") || conj.equals("aber")
+                    ? "После «" + conj + "» порядок слов обычный: подлежащее, потом глагол."
+                    : "После «" + conj + "» глагол уходит в самый конец придаточной части.");
             addConjSmart(sp, conj);
             boolean v2cl = conj.equals("denn") || conj.equals("aber");
             sp.f = c -> mainF.v2(c) + ", " + conj + " " + (v2cl ? cl.v2() : cl.sub());
@@ -373,6 +382,7 @@ public final class Exercises {
         String[] conjs = b1 ? new String[]{"obwohl", "während", "wenn", "weil"} : new String[]{"wenn", "weil"};
         String conj = conjs[r.nextInt(conjs.length)];
         Cl cl = pick(FACTS, r);
+        sp.tips.add("Придаточное стоит первым → дальше сразу глагол, потом подлежащее: «…, esse ich …». В самом придаточном глагол в конце.");
         sp.ru.add("Начни с придаточного «" + cap(conj) + "» (" + conjRu(conj) + "): " + cl.ru() + ".");
         addConjSmart(sp, conj);
         sp.f = c -> cap(conj) + " " + cl.sub() + ", " + mainF.inv(c);
@@ -408,6 +418,7 @@ public final class Exercises {
                 String[] o = pick(Arrays.asList(DASS_OPEN), r).split("\\|");
                 boolean perf = o[2].equals("1") && r.nextBoolean();
                 sp.ru.add("Начни с «" + o[0] + " dass…» (" + o[1] + " что…)." + (perf ? " Время: Perfekt." : ""));
+                sp.tips.add("После «dass» глагол стоит в самом конце." + (perf ? " Perfekt: Partizip + habe." : ""));
                 sp.smart.addAll(List.of("weil", "damit", "ob", "wenn", "habe", "hat", "hätte"));
                 sp.f = c -> join(o[0], "dass", "ich", c.mid(), perf ? c.v.part() + " habe" : c.v.subFinal());
             }
@@ -415,6 +426,7 @@ public final class Exercises {
                 boolean perf = r.nextBoolean();
                 sp.allowIndef = false;
                 sp.ru.add("Составь предложение «Это (тот/та/то) …, который я …» с относительным придаточным." + (perf ? " Время: Perfekt." : ""));
+                sp.tips.add("«Das ist» + предмет; затем der/die/das/den по роду предмета (вин. падеж: муж. → den), глагол в конце.");
                 sp.smart.addAll(List.of("der", "die", "das", "den", "dem", "habe", "hat"));
                 sp.f = c -> {
                     String rel = switch (c.w.objG()) { case 'm' -> "den"; case 'n' -> "das"; default -> "die"; };
@@ -426,12 +438,14 @@ public final class Exercises {
             case 2 -> { // zu-Infinitiv
                 String[] o = pick(Arrays.asList(ZU_OPEN), r).split("\\|");
                 sp.ru.add("Начни с «" + o[0].replace(",", "") + "» (" + o[1] + ") + infinitiv mit zu.");
+                sp.tips.add("Инфинитив с zu — в самом конце; у приставочных глаголов zu между приставкой и корнем (ab·zu·bauen).");
                 sp.smart.addAll(List.of("zu", "um", "dass", "weil"));
                 sp.f = c -> join(o[0], c.mid(), c.v.zuInf());
             }
             case 3 -> { // um ... zu
                 String[] o = pick(Arrays.asList(UM_OPEN), r).split("\\|");
                 sp.ru.add(o[1] + " … (um … zu + infinitiv).");
+                sp.tips.add("«um … zu» + инфинитив в конце; у приставочных глаголов zu между приставкой и корнем (ab·zu·bauen).");
                 sp.smart.addAll(List.of("zu", "damit", "für", "weil"));
                 sp.f = c -> join(o[0], c.mid(), c.v.zuInf());
             }
@@ -439,6 +453,7 @@ public final class Exercises {
                 Cl cl = pick(WISHES, r);
                 boolean first = r.nextBoolean();
                 sp.ru.add("Konjunktiv II («würde» / «hätte» / «wäre»): «если бы» … " + cl.ru() + ".");
+                sp.tips.add("Konjunktiv II: würde + инфинитив в самом конце; в части с wenn — hätte / wäre, глагол в конце.");
                 sp.smart.addAll(List.of("wurde", "wird", "habe", "hatte", "weil", "dass"));
                 sp.f = c -> first
                         ? join("wenn", cl.sub() + ",", "würde", "ich", c.mid(), c.v.inf())
@@ -468,6 +483,9 @@ public final class Exercises {
             if (wantPlace) place = pick(PLACES, r);
         }
         List<String> ru = new ArrayList<>(sp.ru);
+        List<String> tips = new ArrayList<>(sp.tips);
+        if (adj != null) tips.add("Прилагательное получает окончание по роду предмета (-e / -en / -es).");
+        if (place != null) tips.add("Место: in / an / auf + Dativ (im, am, auf dem, in der). Можно ставить и до, и после предмета.");
         if (adj != null) ru.add("Добавь к предмету прилагательное «" + adj.ru() + "» (" + adj.stem() + ").");
         if (place != null) ru.add("Добавь место: " + place.ru() + ".");
 
@@ -506,7 +524,7 @@ public final class Exercises {
         }
         for (String art : new String[]{"der", "die", "das", "den", "dem"}) smart.add(art);
         List<String> tokens = new ArrayList<>(Arrays.asList(primary.split(" ")));
-        return new Task(lvl.name(), ru, primary, acc, tokens, forms, smart, stem);
+        return new Task(lvl.name(), ru, primary, acc, tokens, forms, smart, stem, tips);
     }
 
     // ---------------------------------------------------------------- helpers for the screen

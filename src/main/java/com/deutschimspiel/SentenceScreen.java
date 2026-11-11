@@ -82,6 +82,8 @@ public class SentenceScreen extends Screen {
                 Component.translatable("deutschimspiel.button.answer"), b -> showAnswer(), theme));
         addRenderableWidget(new ThemedButton(bx + 3 * (bw + gap), by, bw, 20,
                 Component.translatable("deutschimspiel.button.close"), b -> onClose(), theme));
+        addRenderableWidget(new ThemedButton(x + PW - 16 - 72, y + 189, 72, 13,
+                Component.translatable("deutschimspiel.button.reset"), b -> Punishment.resetErrors(), theme));
     }
 
     private Component promptComponent() {
@@ -277,8 +279,8 @@ public class SentenceScreen extends Screen {
         g.drawCenteredString(this.font, penalty, x + PW / 2, y + 179, theme.bad());
         Progress.Data d = Progress.get();
         int streak = d.streak.getOrDefault(Progress.key(action, subject.key()), 0);
-        g.drawCenteredString(this.font,
+        g.drawString(this.font,
                 Component.translatable("deutschimspiel.footer", d.correct, d.wrong, streak),
-                x + PW / 2, y + 192, theme.hint());
+                x + 16, y + 192, theme.hint(), false);
     }
 }

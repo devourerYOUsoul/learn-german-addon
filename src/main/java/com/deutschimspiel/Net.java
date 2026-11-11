@@ -55,6 +55,18 @@ public final class Net {
         }
     }
 
+    /** Client -> server: "I answered correctly, heal me one heart". */
+    public record Heal() implements CustomPacketPayload {
+        public static final Type<Heal> TYPE =
+                new Type<>(ResourceLocation.fromNamespaceAndPath(DeutschImSpiel.MODID, "heal"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, Heal> CODEC = StreamCodec.unit(new Heal());
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
+
     /** Client -> server: a window is open, so the player must not take damage. */
     public record PromptState(boolean open) implements CustomPacketPayload {
         public static final Type<PromptState> TYPE =
@@ -85,6 +97,7 @@ public final class Net {
         PayloadRegistrar r = event.registrar("1");
         r.playToServer(PunishRequest.TYPE, PunishRequest.CODEC, ServerPunish::onRequest);
         r.playToServer(RewardRequest.TYPE, RewardRequest.CODEC, ServerRewards::onRequest);
+        r.playToServer(Heal.TYPE, Heal.CODEC, ServerRewards::onHeal);
         r.playToServer(PromptState.TYPE, PromptState.CODEC, ServerPunish::onPromptState);
         IPayloadHandler<FishNotice> fish = FMLEnvironment.dist == Dist.CLIENT
                 ? ClientHandlers::onFish

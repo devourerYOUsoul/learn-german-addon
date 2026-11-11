@@ -25,7 +25,19 @@ public final class ServerRewards {
     private static final Random RNG = new Random();
     private static final Map<UUID, Long> LAST = new HashMap<>();
 
+    private static final Map<UUID, Long> LAST_HEAL = new HashMap<>();
+
     private ServerRewards() {}
+
+    /** One heart (2 hp) for a correct answer. Rate limited so a modified client cannot heal in a flood. */
+    public static void onHeal(Net.Heal msg, IPayloadContext ctx) {
+        if (!(ctx.player() instanceof ServerPlayer sp) || !sp.isAlive()) return;
+        long now = sp.serverLevel().getGameTime();
+        Long last = LAST_HEAL.get(sp.getUUID());
+        if (last != null && now - last < 20L) return;
+        LAST_HEAL.put(sp.getUUID(), now);
+        sp.heal(2.0F);
+    }
 
     public static void onRequest(Net.RewardRequest msg, IPayloadContext ctx) {
         if (!(ctx.player() instanceof ServerPlayer sp) || !sp.isAlive()) return;

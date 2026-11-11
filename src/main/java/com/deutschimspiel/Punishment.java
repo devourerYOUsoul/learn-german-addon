@@ -19,6 +19,16 @@ public final class Punishment {
 
     public static void onCorrect() {
         wrongInRow = 0;
+        Minecraft mc = Minecraft.getInstance();
+        if (Config.HEAL_PER_ANSWER.get() && mc.player != null && mc.getConnection() != null) {
+            PacketDistributor.sendToServer(new Net.Heal());
+        }
+    }
+
+    /** Button "reset errors": stats counter and the wheel counter go back to zero. */
+    public static void resetErrors() {
+        wrongInRow = 0;
+        Progress.resetErrors();
     }
 
     /** @return true when the wheel should open now. */

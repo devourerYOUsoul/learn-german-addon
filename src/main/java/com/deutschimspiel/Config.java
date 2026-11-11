@@ -39,6 +39,7 @@ public final class Config {
     public static final String[] PENALTY_KEYS = {"poison", "damage", "launch", "creepers", "lightning", "loser",
             "villagers", "pumpkin", "hunger", "lose_item", "break_armor"};
     public static final ModConfigSpec.BooleanValue REWARDS_ENABLED;
+    public static final ModConfigSpec.BooleanValue HEAL_PER_ANSWER;
     public static final ModConfigSpec.IntValue REWARD_EVERY;
     public static final String[] REWARD_KEYS = {"meat", "diamond_pickaxe", "diamonds", "iron_armor", "enchanted_book",
             "emeralds", "golden_apples", "fishing_rod", "iron_tool"};
@@ -121,6 +122,7 @@ public final class Config {
         b.pop();
         b.push("rewards");
         REWARDS_ENABLED = b.comment("Reward wheel after every N correct answers.").define("enabled", true);
+        HEAL_PER_ANSWER = b.comment("Every correct answer (hints allowed) heals one heart.").define("healPerAnswer", true);
         REWARD_EVERY = b.comment("Correct answers (no hints) needed for one spin of the reward wheel.")
                 .defineInRange("everyCorrect", 10, 1, 1000);
         b.push("on");

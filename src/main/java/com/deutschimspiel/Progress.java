@@ -76,6 +76,12 @@ public final class Progress {
         }
     }
 
+    public static synchronized void resetErrors() {
+        Data d = get();
+        d.wrong = 0;
+        save(d);
+    }
+
     /** A wrong submission (or a shown answer): one more mistake, streak back to 0. */
     public static synchronized void recordWrong(Action a, String subjectKey) {
         Data d = get();

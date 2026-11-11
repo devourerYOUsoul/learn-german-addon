@@ -43,7 +43,8 @@ public class ExerciseScreen extends Screen {
     private int picked = -1;
     private final List<Integer> wrongPicks = new ArrayList<>();
     private boolean stageDone = false;
-    private int hintLevel = 0;
+    private int hintPresses = 0;
+    private Component hintText = Component.empty();
     private boolean revealed = false;
 
     // whole-exercise state
@@ -93,7 +94,8 @@ public class ExerciseScreen extends Screen {
         mode = st.mode();
         task = st.task();
         stageDone = false;
-        hintLevel = 0;
+        hintPresses = 0;
+        hintText = Component.empty();
         revealed = false;
         picked = -1;
         wrongPicks.clear();
@@ -245,7 +247,7 @@ public class ExerciseScreen extends Screen {
         }
         buttonsY = bottom + 8;
         hintY = buttonsY + 25;
-        feedbackY = hintY + 12;
+        feedbackY = hintY + 33;
         penaltyY = feedbackY + 22;
         footerY = penaltyY + 12;
         ph = footerY + 16;
@@ -282,6 +284,8 @@ public class ExerciseScreen extends Screen {
                 Component.translatable("deutschimspiel.button.answer"), b -> showAnswer(), theme));
         addRenderableWidget(new ThemedButton(bx + 3 * (bw + gap), by, bw, 20,
                 Component.translatable("deutschimspiel.button.close"), b -> onClose(), theme));
+        addRenderableWidget(new ThemedButton(x + PW - 16 - 72, y + footerY - 3, 72, 13,
+                Component.translatable("deutschimspiel.button.reset"), b -> Punishment.resetErrors(), theme));
     }
 
     private Component checkLabel() {
@@ -394,7 +398,119 @@ public class ExerciseScreen extends Screen {
     private void hint() {
         if (stageDone) return;
         anyHint = true;
-        hintLevel = Math.min(2, hintLevel + 1);
+        hintPresses = Math.min(12, hintPresses + 1);
+        if (hintPresses >= 2) {
+            switch (mode) {
+                case TILES, GAP -> autoPlace();
+                case PICK -> eliminateOption();
+                default -> { }
+            }
+        }
+        hintText = buildHint();
+    }
+
+    private static String norm(String t) {
+        return Sentences.norm(t);
+    }
+
+    /** Puts the next correct tile into its slot (replacing a wrong tile if needed). */
+    private void autoPlace() {
+        for (int j = 0; j < slotBlank.length; j++) {
+            if (!slotBlank[j]) continue;
+            String want = norm(disp.get(j));
+            if (slotFill[j] != null && norm(slotFill[j]).equals(want)) continue;
+            if (slotFill[j] != null) unplace(j);
+            int bi = findTile(want);
+            if (bi < 0) {
+                for (int k = 0; k < slotBlank.length; k++) {
+                    if (k != j && slotBlank[k] && slotFill[k] != null && norm(slotFill[k]).equals(want)
+                            && !norm(disp.get(k)).equals(want)) {
+                        unplace(k);
+                        break;
+                    }
+                }
+                bi = findTile(want);
+            }
+            if (bi >= 0) {
+                slotFill[j] = bank.get(bi);
+                slotBank[j] = bi;
+                bankUsed[bi] = true;
+                java.util.Arrays.fill(slotWrong, false);
+            }
+            return;
+        }
+    }
+
+    private int findTile(String want) {
+        for (int i = 0; i < bank.size(); i++) {
+            if (!bankUsed[i] && norm(bank.get(i)).equals(want)) return i;
+        }
+        return -1;
+    }
+
+    private void eliminateOption() {
+        for (int i = 0; i < options.size(); i++) {
+            if (i != correctOpt && !wrongPicks.contains(i)) {
+                wrongPicks.add(i);
+                if (picked == i) picked = -1;
+                return;
+            }
+        }
+    }
+
+    private static String letters(String sentence, int keep) {
+        StringBuilder sb = new StringBuilder();
+        for (String w : stripDot(sentence).split(" ")) {
+            if (sb.length() > 0) sb.append(' ');
+            boolean comma = w.endsWith(",");
+            String c = comma ? w.substring(0, w.length() - 1) : w;
+            int k = Math.min(keep, c.length());
+            sb.append(c, 0, k);
+            for (int i = k; i < c.length(); i++) sb.append('_');
+            if (comma) sb.append(',');
+        }
+        return sb.toString();
+    }
+
+    private Component buildHint() {
+        String noun = Component.translatable("deutschimspiel.hint.noun", Sentences.objectDef(subject.word())).getString();
+        List<String> tips = task.tips();
+        StringBuilder sb = new StringBuilder(noun);
+        if (!tips.isEmpty()) {
+            sb.append("  •  ");
+            if (hintPresses <= 1) {
+                sb.append(tips.get(0));
+            } else {
+                sb.append(String.join("  ", tips));
+            }
+        }
+        String[] words = stripDot(task.primary()).split(" ");
+        switch (mode) {
+            case TYPE, FIX -> {
+                if (hintPresses == 2) {
+                    int n = (words.length + 1) / 2;
+                    sb.append("  •  ").append(Component.translatable("deutschimspiel.ex.hint_start",
+                            String.join(" ", java.util.Arrays.copyOfRange(words, 0, n)) + " …").getString());
+                } else if (hintPresses >= 3) {
+                    sb.append("  •  ").append(Component.translatable("deutschimspiel.ex.hint_letters",
+                            letters(task.primary(), hintPresses >= 4 ? 2 : 1)).getString());
+                }
+            }
+            case GAPTYPE -> {
+                if (hintPresses >= 2) {
+                    sb.append("  •  ").append(Component.translatable("deutschimspiel.ex.hint_letters",
+                            letters(gapAnswer, hintPresses >= 3 ? 2 : 1)).getString());
+                }
+            }
+            case TILES, GAP -> {
+                if (hintPresses >= 2) sb.append("  •  ").append(Component.translatable("deutschimspiel.ex.hint_placed").getString());
+            }
+            case PICK -> {
+                if (hintPresses >= 2) sb.append("  •  ").append(Component.translatable("deutschimspiel.ex.hint_removed").getString());
+            }
+            default -> { }
+        }
+        return Component.literal(sb.toString());
     }
 
     private void showAnswer() {
@@ -622,14 +738,11 @@ public class ExerciseScreen extends Screen {
             default -> { }
         }
 
-        if (hintLevel >= 1 && !stageDone) {
-            Component h = Component.translatable("deutschimspiel.hint.noun", Sentences.objectDef(subject.word()));
-            if (hintLevel >= 2) {
-                h = Component.empty().append(h).append("   ")
-                        .append(Component.translatable("deutschimspiel.ex.hint_start", startOf(task.primary())));
+        if (hintPresses >= 1 && !stageDone) {
+            List<FormattedCharSequence> hl = this.font.split(hintText, PW - 32);
+            for (int i = 0; i < Math.min(3, hl.size()); i++) {
+                g.drawCenteredString(this.font, hl.get(i), x + PW / 2, y + hintY + i * 10, theme.hint());
             }
-            List<FormattedCharSequence> hl = this.font.split(h, PW - 32);
-            if (!hl.isEmpty()) g.drawCenteredString(this.font, hl.get(0), x + PW / 2, y + hintY, theme.hint());
         }
 
         List<FormattedCharSequence> fl = this.font.split(feedback, PW - 32);
@@ -639,9 +752,9 @@ public class ExerciseScreen extends Screen {
         g.drawCenteredString(this.font, penalty, x + PW / 2, y + penaltyY, theme.bad());
         Progress.Data d = Progress.get();
         int streak = d.streak.getOrDefault(Progress.key(action, subject.key()), 0);
-        g.drawCenteredString(this.font,
+        g.drawString(this.font,
                 Component.translatable("deutschimspiel.footer", d.correct, d.wrong, streak),
-                x + PW / 2, y + footerY, theme.hint());
+                x + 16, y + footerY, theme.hint(), false);
     }
 
     private int lightAccent() {

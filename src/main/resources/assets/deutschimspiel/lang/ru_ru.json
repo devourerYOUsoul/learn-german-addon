@@ -137,5 +137,9 @@
   "deutschimspiel.ex.fill_all": "Заполни все пропуски",
   "deutschimspiel.ex.next": "Далее",
   "deutschimspiel.ex.done": "Готово",
-  "deutschimspiel.ex.hint_start": "Начало: %s"
+  "deutschimspiel.ex.hint_start": "Начало: %s",
+  "deutschimspiel.button.reset": "Сброс ошибок",
+  "deutschimspiel.ex.hint_letters": "Буквы: %s",
+  "deutschimspiel.ex.hint_placed": "Правильное слово поставлено на место (жми ещё)",
+  "deutschimspiel.ex.hint_removed": "Один неверный вариант убран"
 }

@@ -137,5 +137,9 @@
   "deutschimspiel.ex.fill_all": "Fill all the gaps",
   "deutschimspiel.ex.next": "Next",
   "deutschimspiel.ex.done": "Done",
-  "deutschimspiel.ex.hint_start": "Starts: %s"
+  "deutschimspiel.ex.hint_start": "Starts: %s",
+  "deutschimspiel.button.reset": "Reset errors",
+  "deutschimspiel.ex.hint_letters": "Letters: %s",
+  "deutschimspiel.ex.hint_placed": "A correct word was placed (press again)",
+  "deutschimspiel.ex.hint_removed": "One wrong option removed"
 }
